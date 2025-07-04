@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { HotelProvider } from './context/HotelContext';
 import { CurrencyProvider } from './context/CurrencyContext';
@@ -14,7 +14,6 @@ import { Dashboard } from './components/Dashboard';
 import { RoomsModule } from './components/RoomsModule';
 import { HousekeepingModule } from './components/HousekeepingModule';
 import { BanquetModule } from './components/BanquetModule';
-import { useTranslation } from 'react-i18next';
 import { RestaurantModule } from './components/RestaurantModule';
 import { RoomServiceModule } from './components/RoomServiceModule';
 import { AdminModule } from './components/AdminModule';

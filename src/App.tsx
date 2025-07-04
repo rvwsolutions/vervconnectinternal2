@@ -13,6 +13,7 @@ import { Dashboard } from './components/Dashboard';
 import { RoomsModule } from './components/RoomsModule';
 import { HousekeepingModule } from './components/HousekeepingModule';
 import { BanquetModule } from './components/BanquetModule';
+import { useTranslation } from 'react-i18next';
 import { RestaurantModule } from './components/RestaurantModule';
 import { RoomServiceModule } from './components/RoomServiceModule';
 import { AdminModule } from './components/AdminModule';
@@ -20,6 +21,7 @@ import { CommunicationHub } from './components/CommunicationHub';
 import { FinancialManagement } from './components/FinancialManagement';
 
 function AppContent() {
+  const { t } = useTranslation();
   const { isAuthenticated, user } = useAuth();
   const [currentModule, setCurrentModule] = useState('dashboard');
   const [moduleFilters, setModuleFilters] = useState<any>({});

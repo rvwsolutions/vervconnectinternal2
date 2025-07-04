@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useHotel } from '../context/HotelContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { useBranding } from '../context/BrandingContext';
+import { useTranslation } from 'react-i18next';
 import { Bed, Users, Calendar, UtensilsCrossed, Coins, TrendingUp, Clock, CheckCircle, ArrowRight, AlertCircle, Plus, Eye, Home, Wrench, Sparkles, UserCheck, LogIn, LogOut, User, Phone, Mail, MapPin, Star, Timer, UserX, Check as CheckIn, Check as CheckOut, ChevronDown } from 'lucide-react';
 
 interface DashboardProps {
@@ -10,6 +11,7 @@ interface DashboardProps {
 }
 
 export function Dashboard({ onModuleChange }: DashboardProps) {
+  const { t } = useTranslation();
   const { user, getEmployeesOnShift } = useAuth();
   const { rooms, bookings, banquetBookings, restaurantTables, roomServiceOrders, guests } = useHotel();
   const { formatCurrency, hotelSettings, convertAmount, getCurrencySymbol } = useCurrency();
@@ -143,9 +145,9 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
   const getGreeting = () => {
     const currentTime = getCurrentTime();
     const hour = parseInt(currentTime.split(':')[0]);
-    if (hour < 12) return 'Good morning';
-    if (hour < 18) return 'Good afternoon';
-    return 'Good evening';
+    if (hour < 12) return `${t('common.welcome')} - Good morning`;
+    if (hour < 18) return `${t('common.welcome')} - Good afternoon`;
+    return `${t('common.welcome')} - Good evening`;
   };
 
   // Get VIP tier badge color
@@ -162,14 +164,14 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
   const getQuickActions = () => {
     const baseActions = [
       {
-        title: "New Booking",
+        title: "New Booking", 
         description: "Create a room reservation",
         icon: Calendar,
         color: "blue",
         onClick: () => onModuleChange('rooms', { action: 'new-booking' })
       },
       {
-        title: "Check-in Guest",
+        title: "Check-in Guest", 
         description: "Process guest arrival",
         icon: CheckCircle,
         color: "green",
@@ -180,14 +182,14 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
     if (user?.role === 'admin' || user?.role === 'manager') {
       baseActions.push(
         {
-          title: "Table Reservation",
+          title: "Table Reservation", 
           description: "Reserve restaurant table",
           icon: UtensilsCrossed,
           color: "orange",
           onClick: () => onModuleChange('restaurant', { action: 'new-reservation' })
         },
         {
-          title: "Event Booking",
+          title: "Event Booking", 
           description: "Schedule banquet event",
           icon: Users,
           color: "purple",
@@ -204,7 +206,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
     switch (user?.role) {
       case 'housekeeping':
         return {
-          title: 'Housekeeping Dashboard',
+          title: t('common.housekeeping'),
           subtitle: 'Your room cleaning assignments and status updates',
           primaryStats: [
             {
@@ -235,7 +237,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
       
       case 'restaurant':
         return {
-          title: 'Restaurant Dashboard',
+          title: t('common.restaurant'),
           subtitle: 'Restaurant operations and room service management',
           primaryStats: [
             {
@@ -265,7 +267,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
       
       case 'front-desk':
         return {
-          title: 'Front Desk Dashboard',
+          title: 'Front Desk',
           subtitle: 'Guest services and reservation management',
           primaryStats: [
             {
@@ -304,7 +306,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
       
       default:
         return {
-          title: `Welcome to VervConnect`,
+          title: t('dashboard.welcomeMessage'),
           subtitle: `Here's what's happening at ${branding.hotelName} today`,
           primaryStats: [
             {
@@ -537,7 +539,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
             <div className="mt-3 flex items-center space-x-2">
               <div className="h-1 w-8 lg:w-12 bg-gradient-to-r from-orange-400 via-pink-500 to-purple-600 rounded-full"></div>
               <span className="text-sm font-medium bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 bg-clip-text text-transparent">
-                Connect with Comfort
+                {t('dashboard.tagline')}
               </span>
               <div className="h-1 w-8 lg:w-12 bg-gradient-to-r from-teal-400 via-blue-500 to-green-500 rounded-full"></div>
             </div>

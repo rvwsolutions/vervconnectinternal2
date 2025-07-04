@@ -18,6 +18,9 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
   const { branding, formatDateTime, formatTime, getCurrentDate, getCurrentTime } = useBranding();
   
   const [showQuickActions, setShowQuickActions] = useState(false);
+  
+  // Determine if the current language is RTL
+  const isRTL = document.documentElement.dir === 'rtl';
 
   const today = getCurrentDate();
   const currentMonth = today.slice(0, 7); // YYYY-MM format
@@ -525,7 +528,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
   return (
     <div className="p-4 lg:p-6 max-w-7xl mx-auto">
       <div className="mb-6 lg:mb-8">
-        <div className="flex items-start justify-between">
+        <div className={`flex items-start justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
           <div className="flex-1">
             <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
               {getGreeting()}, {user?.name}!
@@ -537,11 +540,11 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
             
             {/* VervConnect Tagline */}
             <div className="mt-3 flex items-center space-x-2">
-              <div className="h-1 w-8 lg:w-12 bg-gradient-to-r from-orange-400 via-pink-500 to-purple-600 rounded-full"></div>
+              <div className={`h-1 w-8 lg:w-12 ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-orange-400 via-pink-500 to-purple-600 rounded-full`}></div>
               <span className="text-sm font-medium bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 bg-clip-text text-transparent">
                 {t('dashboard.tagline')}
               </span>
-              <div className="h-1 w-8 lg:w-12 bg-gradient-to-r from-teal-400 via-blue-500 to-green-500 rounded-full"></div>
+              <div className={`h-1 w-8 lg:w-12 ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-teal-400 via-blue-500 to-green-500 rounded-full`}></div>
             </div>
           </div>
 
@@ -802,7 +805,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
       {/* Today's Activity - Relevant to all roles */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 lg:p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-          <Calendar className="w-5 h-5 mr-2 text-indigo-600" />
+          <Calendar className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'} text-indigo-600`} />
           Today's Activity
         </h3>
         <div className="space-y-3">
@@ -811,7 +814,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
               {stats.dirtyRooms > 0 && (
                 <button
                   onClick={() => onModuleChange('housekeeping', { filter: 'dirty' })}
-                  className="w-full flex items-center space-x-3 p-3 bg-orange-50 rounded-lg hover:bg-orange-100 transition-colors touch-manipulation active:bg-orange-200"
+                  className={`w-full flex items-center ${isRTL ? 'flex-row-reverse space-x-reverse' : ''} space-x-3 p-3 bg-orange-50 rounded-lg hover:bg-orange-100 transition-colors touch-manipulation active:bg-orange-200`}
                 >
                   <AlertCircle className="w-5 h-5 text-orange-600 flex-shrink-0" />
                   <span className="text-sm text-orange-800 flex-1 text-left">
@@ -823,7 +826,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
               {stats.todayCheckOuts > 0 && (
                 <button
                   onClick={() => onModuleChange('rooms', { view: 'bookings', dateFilter: 'check-out-today' })}
-                  className="w-full flex items-center space-x-3 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors touch-manipulation active:bg-blue-200"
+                  className={`w-full flex items-center ${isRTL ? 'flex-row-reverse space-x-reverse' : ''} space-x-3 p-3 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors touch-manipulation active:bg-blue-200`}
                 >
                   <Clock className="w-5 h-5 text-blue-600 flex-shrink-0" />
                   <span className="text-sm text-blue-800 flex-1 text-left">

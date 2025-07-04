@@ -7,6 +7,7 @@ import { FinancialProvider } from './context/FinancialContext';
 import { OperationsProvider } from './context/OperationsContext';
 import { SecurityProvider } from './context/SecurityContext';
 import { BrandingProvider } from './context/BrandingContext';
+import { useTranslation } from 'react-i18next';
 import { LoginForm } from './components/LoginForm';
 import { Layout } from './components/Layout';
 import { Dashboard } from './components/Dashboard';
@@ -116,6 +117,15 @@ function AppContent() {
 }
 
 function App() {
+  const { i18n } = useTranslation();
+  
+  // Apply RTL/LTR direction based on current language
+  useEffect(() => {
+    const rtlLanguages = ['ar'];
+    document.documentElement.dir = rtlLanguages.includes(i18n.language) ? 'rtl' : 'ltr';
+    document.documentElement.lang = i18n.language;
+  }, [i18n.language]);
+  
   return (
     <BrandingProvider>
       <AuthProvider>

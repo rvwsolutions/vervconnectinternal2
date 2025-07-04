@@ -18,6 +18,9 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
   const { t } = useTranslation();
   const { branding, formatTime, getCurrentTime } = useBranding();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  
+  // Determine if the current language is RTL
+  const isRTL = document.documentElement.dir === 'rtl';
 
   // Close sidebar when module changes
   useEffect(() => {
@@ -141,7 +144,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
   };
 
   const Sidebar = ({ mobile = false }: { mobile?: boolean }) => (
-    <div className={`${mobile ? 'fixed inset-0 z-50' : 'hidden lg:flex'} ${mobile ? 'lg:hidden' : ''}`}>
+    <div className={`${mobile ? 'fixed inset-0 z-50' : 'hidden lg:flex'} ${mobile ? 'lg:hidden' : ''}`} style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
       {mobile && (
         <div 
           className="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity" 
@@ -152,7 +155,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
       
       <div className={`flex flex-col ${mobile ? 'w-80' : 'w-80'} bg-white/95 backdrop-blur-md shadow-2xl border-r border-blue-100 ${mobile ? 'relative' : ''}`}>
         {/* VervConnect Platform Branding */}
-        <div className="flex items-center justify-between h-16 lg:h-20 px-3 lg:px-4 border-b border-blue-100 bg-gradient-to-r from-sky-50 via-blue-50 to-indigo-50">
+        <div className={`flex items-center justify-between h-16 lg:h-20 px-3 lg:px-4 border-b border-blue-100 ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-sky-50 via-blue-50 to-indigo-50`}>
           <div className="flex items-center space-x-2 w-full min-w-0">
             {/* Home button - positioned to the left */}
             <button
@@ -188,7 +191,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
         </div>
 
         {/* Hotel Info Section */}
-        <div className="p-3 lg:p-4 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+        <div className={`p-3 lg:p-4 border-b border-blue-100 ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-blue-50 to-indigo-50`}>
           <div className="p-3 lg:p-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-blue-200 shadow-sm">
             <div className="flex items-center space-x-3">
               {branding.logoUrl ? (
@@ -222,7 +225,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           </div>
         </div>
 
-        <div className="flex-1 px-3 lg:px-4 py-4 lg:py-6 overflow-y-auto bg-gradient-to-b from-white to-blue-50">
+        <div className={`flex-1 px-3 lg:px-4 py-4 lg:py-6 overflow-y-auto ${isRTL ? 'bg-gradient-to-t' : 'bg-gradient-to-b'} from-white to-blue-50`}>
           <nav className="space-y-1 lg:space-y-2">
             {modules.map((module) => {
               const Icon = module.icon;
@@ -234,8 +237,8 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
                   onClick={() => handleModuleChange(module.id)}
                   className={`w-full flex items-center space-x-3 px-3 lg:px-4 py-3 lg:py-3 rounded-xl text-left transition-all relative touch-manipulation ${
                     isActive 
-                      ? 'bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 border-r-4 border-blue-500 shadow-md' 
-                      : 'text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100'
+                      ? `${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-blue-100 to-indigo-100 text-blue-800 ${isRTL ? 'border-l-4 border-blue-500' : 'border-r-4 border-blue-500'} shadow-md` 
+                      : `text-gray-700 hover:${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100`
                   }`}
                 >
                   <Icon className="w-5 h-5 flex-shrink-0" />
@@ -251,7 +254,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           </nav>
         </div>
 
-        <div className="p-3 lg:p-4 border-t border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+        <div className={`p-3 lg:p-4 border-t border-blue-100 ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-blue-50 to-indigo-50`}>
           <div className="flex items-center space-x-3 mb-3 lg:mb-4">
             <div className={`w-8 h-8 lg:w-10 lg:h-10 ${getRoleBadgeColor(user?.role || '')} rounded-full flex items-center justify-center shadow-sm flex-shrink-0`}>
               <span className="text-white font-medium text-sm lg:text-base">
@@ -267,7 +270,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           </div>
           
           {/* Current Time Display */}
-          <div className="mb-3 p-2 lg:p-3 rounded-xl bg-gradient-to-r from-sky-100 to-blue-100 border border-sky-200">
+          <div className={`mb-3 p-2 lg:p-3 rounded-xl ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-sky-100 to-blue-100 border border-sky-200`}>
             <div className="flex items-center space-x-2">
               <Bell className="w-4 h-4 text-sky-600 flex-shrink-0" />
               <span className="text-sm font-medium text-sky-800 truncate">
@@ -281,7 +284,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           
           {/* Notification Bell */}
           {unreadCount > 0 && (
-            <div className="mb-3 p-2 lg:p-3 rounded-xl bg-gradient-to-r from-red-100 to-rose-100 border border-red-200">
+            <div className={`mb-3 p-2 lg:p-3 rounded-xl ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-red-100 to-rose-100 border border-red-200`}>
               <div className="flex items-center space-x-2">
                 <Bell className="w-4 h-4 text-red-600 flex-shrink-0" />
                 <span className="text-sm font-medium text-red-800 truncate">
@@ -299,7 +302,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           
           <button
             onClick={logout}
-            className="w-full flex items-center space-x-3 px-3 lg:px-4 py-2 lg:py-2 rounded-xl transition-all text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100 touch-manipulation"
+            className={`w-full flex items-center space-x-3 px-3 lg:px-4 py-2 lg:py-2 rounded-xl transition-all text-gray-700 hover:${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100 touch-manipulation`}
           >
             <LogOut className="w-5 h-5 flex-shrink-0" />
             <span className="text-sm lg:text-base">{t('common.logout')}</span>
@@ -314,7 +317,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
       <Sidebar />
       {sidebarOpen && <Sidebar mobile />}
 
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden" style={{ direction: 'ltr' }}>
         <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-blue-100 lg:hidden">
           <div className="flex items-center justify-between h-14 px-4">
             <div className="flex items-center space-x-2">
@@ -357,7 +360,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           </div>
         </header>
 
-        <main className="flex-1 overflow-auto bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <main className={`flex-1 overflow-auto ${isRTL ? 'bg-gradient-to-bl' : 'bg-gradient-to-br'} from-blue-50 via-white to-indigo-50`}>
           <div className="min-h-full">
             {children}
           </div>

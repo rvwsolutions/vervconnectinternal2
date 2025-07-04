@@ -8,6 +8,13 @@ import hiTranslation from './locales/hi.json';
 import teTranslation from './locales/te.json';
 import esTranslation from './locales/es.json';
 
+// Function to handle RTL/LTR direction changes
+const setDocumentDirection = (language: string) => {
+  const rtlLanguages = ['ar'];
+  document.documentElement.dir = rtlLanguages.includes(language) ? 'rtl' : 'ltr';
+  document.documentElement.lang = language;
+};
+
 // Initialize i18next
 i18n
   .use(LanguageDetector)
@@ -40,5 +47,13 @@ i18n
       caches: ['localStorage']
     }
   });
+
+// Set initial document direction based on current language
+setDocumentDirection(i18n.language);
+
+// Listen for language changes and update document direction
+i18n.on('languageChanged', (lng) => {
+  setDocumentDirection(lng);
+});
 
 export default i18n;

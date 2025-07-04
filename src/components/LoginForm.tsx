@@ -15,11 +15,11 @@ export function LoginForm() {
   const { branding } = useBranding();
 
   const demoAccounts = [
-    { role: 'admin', email: 'admin@harmonysuite.com', name: `Alex Thompson - ${t('auth.administrator')}`, icon: Shield, color: 'purple' },
-    { role: 'manager', email: 'sarah@harmonysuite.com', name: `Sarah Johnson - ${t('auth.manager')}`, icon: Shield, color: 'blue' },
-    { role: 'front-desk', email: 'mike@harmonysuite.com', name: `Mike Chen - ${t('auth.frontDesk')}`, icon: Shield, color: 'green' },
-    { role: 'housekeeping', email: 'lisa@harmonysuite.com', name: `Lisa Rodriguez - ${t('auth.housekeeping')}`, icon: Shield, color: 'orange' },
-    { role: 'restaurant', email: 'david@harmonysuite.com', name: `David Kim - ${t('auth.restaurant')}`, icon: Shield, color: 'red' },
+    { role: 'admin', email: 'admin@harmonysuite.com', name: `${t('auth.administrator')} - Alex Thompson`, icon: Shield, color: 'purple' },
+    { role: 'manager', email: 'sarah@harmonysuite.com', name: `${t('auth.manager')} - Sarah Johnson`, icon: Shield, color: 'blue' },
+    { role: 'front-desk', email: 'mike@harmonysuite.com', name: `${t('auth.frontDesk')} - Mike Chen`, icon: Shield, color: 'green' },
+    { role: 'housekeeping', email: 'lisa@harmonysuite.com', name: `${t('auth.housekeeping')} - Lisa Rodriguez`, icon: Shield, color: 'orange' },
+    { role: 'restaurant', email: 'david@harmonysuite.com', name: `${t('auth.restaurant')} - David Kim`, icon: Shield, color: 'red' },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {

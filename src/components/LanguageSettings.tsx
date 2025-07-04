@@ -23,13 +23,10 @@ export function LanguageSettings() {
 
   // Update interface direction when language changes
   useEffect(() => {
-    if (selectedLanguage === 'ar') {
-      setInterfaceDirection('rtl');
-      document.documentElement.dir = 'rtl';
-    } else {
-      setInterfaceDirection('ltr');
-      document.documentElement.dir = 'ltr';
-    }
+    // Set interface direction based on current language
+    const rtlLanguages = ['ar'];
+    const direction = rtlLanguages.includes(selectedLanguage) ? 'rtl' : 'ltr';
+    setInterfaceDirection(direction);
   }, [selectedLanguage]);
 
   const languages = [
@@ -45,6 +42,11 @@ export function LanguageSettings() {
     setSelectedLanguage(langCode);
     setShowLanguageDropdown(false);
     
+    // Update interface direction based on language
+    const rtlLanguages = ['ar'];
+    const direction = rtlLanguages.includes(langCode) ? 'rtl' : 'ltr';
+    setInterfaceDirection(direction);
+    
     // Show success message
     setShowSuccessMessage(true);
     setTimeout(() => {
@@ -56,6 +58,13 @@ export function LanguageSettings() {
     // In a real app, this would save settings to a database or localStorage
     localStorage.setItem('dateFormat', dateFormat);
     localStorage.setItem('timeFormat', timeFormat);
+    
+    // Apply interface direction - this is now handled by i18n.on('languageChanged')
+    // but we'll keep it here for manual changes
+    document.documentElement.dir = interfaceDirection;
+    
+    // Reload the page to apply all language changes fully
+    window.location.reload();
     
     // Show success message
     setShowSuccessMessage(true);

@@ -147,16 +147,16 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
     <div className={`${mobile ? 'fixed inset-0 z-50' : 'hidden lg:flex'} ${mobile ? 'lg:hidden' : ''}`} style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
       {mobile && (
         <div 
-          className="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity" 
+          className="fixed inset-0 bg-black/30 backdrop-blur-sm transition-opacity z-40" 
           onClick={closeSidebar}
           onTouchEnd={closeSidebar}
         />
       )}
       
-      <div className={`flex flex-col ${mobile ? 'w-80' : 'w-80'} bg-white/95 backdrop-blur-md shadow-2xl border-r border-blue-100 ${mobile ? 'relative' : ''}`}>
+      <div className={`flex flex-col ${mobile ? 'w-80' : 'w-80'} bg-white/95 backdrop-blur-md shadow-2xl ${isRTL ? 'border-l' : 'border-r'} border-blue-100 ${mobile ? 'relative z-50' : ''}`}>
         {/* VervConnect Platform Branding */}
         <div className={`flex items-center justify-between h-16 lg:h-20 px-3 lg:px-4 border-b border-blue-100 ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-sky-50 via-blue-50 to-indigo-50`}>
-          <div className="flex items-center space-x-2 w-full min-w-0">
+          <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-2 w-full min-w-0`}>
             {/* Home button - positioned to the left */}
             <button
               onClick={() => handleModuleChange('dashboard')}
@@ -166,7 +166,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
             </button>
             
             {/* Logo and text container with proper spacing */}
-            <div className="flex items-center space-x-2 lg:space-x-3 flex-1 min-w-0">
+            <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-2 lg:space-x-3 flex-1 min-w-0`}>
               <VervConnectLogo size={mobile ? "sm" : "md"} animated={true} />
               <div className="flex-1 min-w-0">
                 <h1 className="text-lg lg:text-xl font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent leading-tight truncate">
@@ -191,9 +191,9 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
         </div>
 
         {/* Hotel Info Section */}
-        <div className={`p-3 lg:p-4 border-b border-blue-100 ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-blue-50 to-indigo-50`}>
+        <div className={`p-3 lg:p-4 border-b border-blue-100 ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-blue-50 to-indigo-50 text-${isRTL ? 'right' : 'left'}`}>
           <div className="p-3 lg:p-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-blue-200 shadow-sm">
-            <div className="flex items-center space-x-3">
+            <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-3`}>
               {branding.logoUrl ? (
                 <img
                   src={branding.logoUrl}
@@ -208,7 +208,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
               <div className="flex-1 min-w-0">
                 <h3 className="text-base lg:text-lg font-bold text-gray-800 truncate">{branding.hotelName}</h3>
                 {branding.starRating > 0 && (
-                  <div className="flex items-center space-x-1 mb-1">
+                  <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-1 mb-1`}>
                     {Array.from({ length: branding.starRating }, (_, i) => (
                       <span key={i} className="text-yellow-400 text-xs lg:text-sm">★</span>
                     ))}
@@ -235,7 +235,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
                 <button
                   key={module.id}
                   onClick={() => handleModuleChange(module.id)}
-                  className={`w-full flex items-center space-x-3 px-3 lg:px-4 py-3 lg:py-3 rounded-xl text-left transition-all relative touch-manipulation ${
+                  className={`w-full flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-3 px-3 lg:px-4 py-3 lg:py-3 rounded-xl ${isRTL ? 'text-right' : 'text-left'} transition-all relative touch-manipulation ${
                     isActive 
                       ? `${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-blue-100 to-indigo-100 text-blue-800 ${isRTL ? 'border-l-4 border-blue-500' : 'border-r-4 border-blue-500'} shadow-md` 
                       : `text-gray-700 hover:${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100`
@@ -244,7 +244,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
                   <Icon className="w-5 h-5 flex-shrink-0" />
                   <span className="font-medium truncate text-sm lg:text-base">{module.name}</span>
                   {module.badge && module.badge > 0 && (
-                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-red-400 to-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 shadow-sm">
+                    <span className={`absolute ${isRTL ? 'left-3' : 'right-3'} top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-red-400 to-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 shadow-sm`}>
                       {module.badge > 99 ? '99+' : module.badge}
                     </span>
                   )}
@@ -255,7 +255,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
         </div>
 
         <div className={`p-3 lg:p-4 border-t border-blue-100 ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-blue-50 to-indigo-50`}>
-          <div className="flex items-center space-x-3 mb-3 lg:mb-4">
+          <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-3 mb-3 lg:mb-4`}>
             <div className={`w-8 h-8 lg:w-10 lg:h-10 ${getRoleBadgeColor(user?.role || '')} rounded-full flex items-center justify-center shadow-sm flex-shrink-0`}>
               <span className="text-white font-medium text-sm lg:text-base">
                 {user?.name?.charAt(0) || 'U'}
@@ -271,7 +271,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           
           {/* Current Time Display */}
           <div className={`mb-3 p-2 lg:p-3 rounded-xl ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-sky-100 to-blue-100 border border-sky-200`}>
-            <div className="flex items-center space-x-2">
+            <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-2`}>
               <Bell className="w-4 h-4 text-sky-600 flex-shrink-0" />
               <span className="text-sm font-medium text-sky-800 truncate">
                 {formatTime(getCurrentTime())}
@@ -285,7 +285,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           {/* Notification Bell */}
           {unreadCount > 0 && (
             <div className={`mb-3 p-2 lg:p-3 rounded-xl ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-red-100 to-rose-100 border border-red-200`}>
-              <div className="flex items-center space-x-2">
+              <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-2`}>
                 <Bell className="w-4 h-4 text-red-600 flex-shrink-0" />
                 <span className="text-sm font-medium text-red-800 truncate">
                   {unreadCount} unread message{unreadCount !== 1 ? 's' : ''}
@@ -302,7 +302,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           
           <button
             onClick={logout}
-            className={`w-full flex items-center space-x-3 px-3 lg:px-4 py-2 lg:py-2 rounded-xl transition-all text-gray-700 hover:${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100 touch-manipulation`}
+            className={`w-full flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-3 px-3 lg:px-4 py-2 lg:py-2 rounded-xl transition-all text-gray-700 hover:${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100 touch-manipulation`}
           >
             <LogOut className="w-5 h-5 flex-shrink-0" />
             <span className="text-sm lg:text-base">{t('common.logout')}</span>
@@ -317,10 +317,10 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
       <Sidebar />
       {sidebarOpen && <Sidebar mobile />}
 
-      <div className="flex-1 flex flex-col overflow-hidden" style={{ direction: 'ltr' }}>
+      <div className="flex-1 flex flex-col overflow-hidden" style={{ direction: isRTL ? 'rtl' : 'ltr' }}>
         <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-blue-100 lg:hidden">
-          <div className="flex items-center justify-between h-14 px-4">
-            <div className="flex items-center space-x-2">
+          <div className={`flex items-center justify-between h-14 px-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-2`}>
               {/* Home button - moved to left of logo */}
               <button
                 onClick={() => handleModuleChange('dashboard')}
@@ -338,13 +338,15 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
             </div>
             
             <div className="flex items-center space-x-2 flex-1 justify-center min-w-0">
-              <VervConnectLogo size="sm" animated={true} />
+              <div className={`flex items-center ${isRTL ? 'flex-row-reverse' : ''}`}>
+                <VervConnectLogo size="sm" animated={true} />
+              </div>
               <div className="text-lg font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent truncate">
                 VervConnect
               </div>
             </div>
             
-            <div className="flex items-center space-x-2 flex-shrink-0">
+            <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-2 flex-shrink-0`}>
               {unreadCount > 0 && (
                 <button
                   onClick={() => handleModuleChange('communications')}

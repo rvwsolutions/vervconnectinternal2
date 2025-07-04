@@ -11,8 +11,18 @@ import esTranslation from './locales/es.json';
 // Function to handle RTL/LTR direction changes
 const setDocumentDirection = (language: string) => {
   const rtlLanguages = ['ar'];
-  document.documentElement.dir = rtlLanguages.includes(language) ? 'rtl' : 'ltr';
+  const direction = rtlLanguages.includes(language) ? 'rtl' : 'ltr';
+  document.documentElement.dir = direction;
   document.documentElement.lang = language;
+  
+  // Apply additional RTL-specific styles
+  if (direction === 'rtl') {
+    document.documentElement.classList.add('rtl-layout');
+    document.body.classList.add('rtl-layout');
+  } else {
+    document.documentElement.classList.remove('rtl-layout');
+    document.body.classList.remove('rtl-layout');
+  }
 };
 
 // Initialize i18next
@@ -42,7 +52,8 @@ i18n
     interpolation: {
       escapeValue: false // React already safes from XSS
     },
-    detection: {
+    detection: { 
+      lookupLocalStorage: 'i18nextLng',
       order: ['localStorage', 'navigator'],
       caches: ['localStorage']
     }

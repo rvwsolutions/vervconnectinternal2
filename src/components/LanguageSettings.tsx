@@ -57,19 +57,19 @@ export function LanguageSettings() {
   const saveSettings = () => {
     // In a real app, this would save settings to a database or localStorage
     localStorage.setItem('dateFormat', dateFormat);
-    localStorage.setItem('timeFormat', timeFormat);
+    localStorage.setItem('timeFormat', timeFormat); 
+    localStorage.setItem('i18nextLng', selectedLanguage);
     
     // Apply interface direction - this is now handled by i18n.on('languageChanged')
     // but we'll keep it here for manual changes
     document.documentElement.dir = interfaceDirection;
     
-    // Reload the page to apply all language changes fully
-    window.location.reload();
-    
     // Show success message
     setShowSuccessMessage(true);
     setTimeout(() => {
       setShowSuccessMessage(false);
+      // Reload the page to apply all language changes fully
+      window.location.reload();
     }, 3000);
   };
 

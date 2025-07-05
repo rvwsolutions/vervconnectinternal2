@@ -320,8 +320,9 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
             onClick={() => setSidebarOpen(true)}
             className="p-2 m-2 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded-lg transition-colors touch-manipulation"
           >
-            <LogOut className={`w-5 h-5 flex-shrink-0 ${isRTL ? 'transform rotate-180' : ''}`} />
-            <span className="text-sm lg:text-base">Sign out</span>
+            <Menu className="w-5 h-5" />
+          </button>
+          </button>
         </div>
         
         <main className="p-4 lg:p-6">

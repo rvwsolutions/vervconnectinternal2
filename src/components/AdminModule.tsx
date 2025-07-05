@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useBranding } from '../context/BrandingContext';
 import { BrandingSettings } from './BrandingSettings';
-import { LanguageSettings } from './LanguageSettings';
 import { ShiftManagement } from './ShiftManagement';
 import { RoomManagement } from './RoomManagement';
 import { TableManagement } from './TableManagement';
@@ -27,15 +26,13 @@ import {
   Lock,
   Languages
 } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
 
 export function AdminModule() {
   const { users, addUser, updateUser, toggleUserStatus } = useAuth();
   const { branding } = useBranding();
-  const { t } = useTranslation();
   
   const [activeSection, setActiveSection] = useState<
-    'users' | 'branding' | 'shifts' | 'rooms' | 'tables' | 'security' | 'language' | 'system' | 'reports'
+    'users' | 'branding' | 'shifts' | 'rooms' | 'tables' | 'security' | 'system' | 'reports'
   >('users');
 
   const renderSection = () => {
@@ -48,15 +45,13 @@ export function AdminModule() {
         return <RoomManagement />;
       case 'tables':
         return <TableManagement />;
-      case 'language':
-        return <LanguageSettings />;
       case 'users':
       default:
         return (
           <div className="p-6 max-w-7xl mx-auto">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">{t('admin.userManagement')}</h1>
+                <h1 className="text-3xl font-bold text-gray-900">User Management</h1>
                 <p className="text-gray-600 mt-2">Manage staff accounts, roles, and permissions</p>
               </div>
               <button className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
@@ -137,7 +132,7 @@ export function AdminModule() {
       {/* Admin Sidebar */}
       <div className="w-64 bg-white border-r border-gray-200 h-full overflow-y-auto">
         <div className="p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-6">{t('admin.adminModule')}</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-6">Administration</h2>
           <nav className="space-y-1">
             <button
               onClick={() => setActiveSection('users')}
@@ -148,7 +143,7 @@ export function AdminModule() {
               }`}
             >
               <Users className="w-5 h-5 flex-shrink-0" />
-              <span>{t('admin.userManagement')}</span>
+              <span>User Management</span>
             </button>
             
             <button
@@ -160,7 +155,7 @@ export function AdminModule() {
               }`}
             >
               <Building className="w-5 h-5 flex-shrink-0" />
-              <span>{t('branding.hotelBranding')}</span>
+              <span>Hotel Branding</span>
             </button>
             
             <button
@@ -184,7 +179,7 @@ export function AdminModule() {
               }`}
             >
               <Bed className="w-5 h-5 flex-shrink-0" />
-              <span>{t('rooms.roomManagement')}</span>
+              <span>Room Management</span>
             </button>
             
             <button
@@ -208,19 +203,7 @@ export function AdminModule() {
               }`}
             >
               <Shield className="w-5 h-5 flex-shrink-0" />
-              <span>{t('admin.securitySettings')}</span>
-            </button>
-            
-            <button
-              onClick={() => setActiveSection('language')}
-              className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                activeSection === 'language' 
-                  ? 'bg-indigo-50 text-indigo-700' 
-                  : 'text-gray-700 hover:bg-gray-50 hover:text-gray-900'
-              }`}
-            >
-              <Languages className="w-5 h-5 flex-shrink-0" />
-              <span>{t('admin.languageSettings')}</span>
+              <span>Security Settings</span>
             </button>
             
             <button
@@ -232,7 +215,7 @@ export function AdminModule() {
               }`}
             >
               <Settings className="w-5 h-5 flex-shrink-0" />
-              <span>{t('admin.systemSettings')}</span>
+              <span>System Settings</span>
             </button>
             
             <button

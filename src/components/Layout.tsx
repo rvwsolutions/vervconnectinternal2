@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { useCommunication } from '../context/CommunicationContext';
 import { useBranding } from '../context/BrandingContext';
@@ -13,13 +12,10 @@ interface LayoutProps {
 }
 
 export function Layout({ children, currentModule, onModuleChange }: LayoutProps) {
-  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const { unreadCount } = useCommunication();
   const { branding, formatTime, getCurrentTime } = useBranding();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  
-  const isRTL = document.documentElement.dir === 'rtl';
 
   // Close sidebar when module changes
   useEffect(() => {
@@ -152,9 +148,9 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
         />
       )}
       
-      <div className={`flex flex-col ${mobile ? 'w-80' : 'w-80'} bg-white/95 backdrop-blur-md shadow-2xl ${isRTL ? 'border-l' : 'border-r'} border-blue-100 ${mobile ? 'relative z-50' : ''} rtl-sidebar`}>
+      <div className={`flex flex-col ${mobile ? 'w-80' : 'w-80'} bg-white/95 backdrop-blur-md shadow-2xl border-r border-blue-100 ${mobile ? 'relative z-50' : ''}`}>
         <div className="flex items-center justify-between h-16 lg:h-20 px-3 lg:px-4 border-b border-blue-100 bg-gradient-to-r from-sky-50 via-blue-50 to-indigo-50">
-          <div className={`flex items-center space-x-2 w-full min-w-0`}>
+          <div className="flex items-center space-x-2 w-full min-w-0">
             {/* Home button - positioned to the left */}
             <button
               onClick={() => handleModuleChange('dashboard')} 
@@ -241,7 +237,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
                   <Icon className="w-5 h-5 flex-shrink-0" />
                   <span className="font-medium truncate text-sm lg:text-base">{module.name}</span>
                   {module.badge && module.badge > 0 && (
-                    <span className={`absolute ${isRTL ? 'left-3' : 'right-3'} top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-red-400 to-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 shadow-sm`}>
+                    <span className="absolute right-3 top-1/2 transform -translate-y-1/2 bg-gradient-to-r from-red-400 to-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center flex-shrink-0 shadow-sm">
                       {module.badge > 99 ? '99+' : module.badge}
                     </span>
                   )}
@@ -297,15 +293,13 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
             </div>
           )}
           
-          <div className="rtl-aware-button">
-            <button
-              onClick={logout} 
-              className="w-full flex items-center space-x-3 px-3 lg:px-4 py-2 lg:py-2 rounded-xl transition-all text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100 touch-manipulation" 
-            >
-              <LogOut className="w-5 h-5 flex-shrink-0" />
-              <span className="text-sm lg:text-base">{t('common.logout')}</span>
-            </button>
-          </div>
+          <button
+            onClick={logout} 
+            className="w-full flex items-center space-x-3 px-3 lg:px-4 py-2 lg:py-2 rounded-xl transition-all text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100 touch-manipulation" 
+          >
+            <LogOut className="w-5 h-5 flex-shrink-0" />
+            <span className="text-sm lg:text-base">Sign out</span>
+          </button>
         </div>
       </div>
     </div>

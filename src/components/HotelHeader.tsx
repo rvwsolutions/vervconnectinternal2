@@ -1,6 +1,5 @@
 import React from 'react';
 import { useBranding } from '../context/BrandingContext';
-import { useTranslation } from 'react-i18next';
 import { VervConnectLogo } from './VervConnectLogo';
 import { Hotel, Star, MapPin, Phone, Mail, Globe, Building } from 'lucide-react';
 
@@ -20,8 +19,6 @@ export function HotelHeader({
   className = ''
 }: HotelHeaderProps) {
   const { branding } = useBranding();
-  const { t } = useTranslation();
-  const isRTL = document.documentElement.dir === 'rtl';
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -36,7 +33,7 @@ export function HotelHeader({
 
   if (variant === 'minimal') {
     return (
-      <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-3 ${className}`}>
+      <div className={`flex items-center space-x-3 ${className}`}>
         {branding.logoUrl ? (
           <img
             src={branding.logoUrl}
@@ -58,8 +55,8 @@ export function HotelHeader({
 
   if (variant === 'compact') {
     return (
-      <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''} ${className}`}>
-        <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-3`}>
+      <div className={`flex items-center justify-between ${className}`}>
+        <div className="flex items-center space-x-3">
           {branding.logoUrl ? (
             <img
               src={branding.logoUrl}
@@ -77,21 +74,21 @@ export function HotelHeader({
           <div>
             <h1 className="text-2xl font-bold text-gray-900">{branding.hotelName}</h1>
             {showRating && branding.starRating > 0 && (
-              <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-1 mt-1`}>
+              <div className="flex items-center space-x-1 mt-1">
                 {renderStars(branding.starRating)}
-                <span className={`text-sm text-gray-600 ${isRTL ? 'mr-2' : 'ml-2'}`}>{branding.starRating} Star Hotel</span>
+                <span className="text-sm text-gray-600 ml-2">{branding.starRating} Star Hotel</span>
               </div>
             )}
           </div>
         </div>
         
         {showContact && (
-          <div className={`${isRTL ? 'text-left' : 'text-right'} text-sm text-gray-600`}>
-            <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-2`}>
+          <div className="text-right text-sm text-gray-600">
+            <div className="flex items-center space-x-2">
               <Phone className="w-4 h-4" />
               <span>{branding.contact.phone}</span>
             </div>
-            <div className={`flex items-center ${isRTL ? 'space-x-reverse' : ''} space-x-2 mt-1`}>
+            <div className="flex items-center space-x-2 mt-1">
               <Mail className="w-4 h-4" />
               <span>{branding.contact.email}</span>
             </div>

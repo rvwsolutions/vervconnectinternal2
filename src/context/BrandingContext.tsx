@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { HotelBranding } from '../types';
 
 interface BrandingContextType {
@@ -90,7 +89,6 @@ const DEFAULT_BRANDING: HotelBranding = {
 
 export function BrandingProvider({ children }: { children: ReactNode }) {
   const [branding, setBranding] = useState<HotelBranding>(DEFAULT_BRANDING);
-  const { i18n } = useTranslation();
 
   // Load branding from localStorage on mount
   useEffect(() => {
@@ -244,8 +242,6 @@ export function BrandingProvider({ children }: { children: ReactNode }) {
   const formatDateTime = (date: string | Date, options?: Intl.DateTimeFormatOptions): string => {
     const dateObj = typeof date === 'string' ? new Date(date) : date;
     const validTimeZone = getValidTimeZone(branding.timeZone);
-    
-    // Adjust date format based on current language
     const defaultOptions: Intl.DateTimeFormatOptions = {
       timeZone: validTimeZone,
       year: 'numeric',
@@ -253,20 +249,10 @@ export function BrandingProvider({ children }: { children: ReactNode }) {
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
-      hour12: i18n.language !== 'ar' // Use 24-hour format for Arabic
+      hour12: true
     };
     
-    // Use appropriate locale based on current language
-    const localeMap: Record<string, string> = {
-      en: 'en-US',
-      ar: 'ar-AE',
-      hi: 'hi-IN',
-      te: 'te-IN',
-      es: 'es-ES'
-    };
-    
-    const locale = localeMap[i18n.language] || 'en-US';
-    return dateObj.toLocaleString(locale, { ...defaultOptions, ...options });
+    return dateObj.toLocaleString('en-US', { ...defaultOptions, ...options });
   };
 
   const formatTime = (time: string): string => {
@@ -284,43 +270,18 @@ export function BrandingProvider({ children }: { children: ReactNode }) {
     }
     
     const validTimeZone = getValidTimeZone(branding.timeZone);
-    
-    // Use appropriate locale and format based on current language
-    const localeMap: Record<string, string> = {
-      en: 'en-US',
-      ar: 'ar-AE',
-      hi: 'hi-IN',
-      te: 'te-IN',
-      es: 'es-ES'
-    };
-    
-    const locale = localeMap[i18n.language] || 'en-US';
-    const hour12 = i18n.language !== 'ar'; // Use 24-hour format for Arabic
-    
     return timeToFormat.toLocaleTimeString('en-US', {
       timeZone: validTimeZone,
       hour: '2-digit',
       minute: '2-digit',
-      hour12: hour12
+      hour12: true
     });
   };
 
   const formatDate = (date: string | Date): string => {
     const dateObj = typeof date === 'string' ? new Date(date) : date;
     const validTimeZone = getValidTimeZone(branding.timeZone);
-    
-    // Use appropriate locale based on current language
-    const localeMap: Record<string, string> = {
-      en: 'en-US',
-      ar: 'ar-AE',
-      hi: 'hi-IN',
-      te: 'te-IN',
-      es: 'es-ES'
-    };
-    
-    const locale = localeMap[i18n.language] || 'en-US';
-    
-    return dateObj.toLocaleDateString(locale, {
+    return dateObj.toLocaleDateString('en-US', {
       timeZone: validTimeZone,
       year: 'numeric',
       month: 'short',

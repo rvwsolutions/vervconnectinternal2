@@ -5,10 +5,12 @@
 /* Font family for different languages */
 :root {
   --font-family-base: 'Noto Sans', sans-serif;
+  --direction: ltr;
 }
 
 [lang="ar"] {
   --font-family-base: 'Noto Sans Arabic', sans-serif;
+  --direction: rtl;
 }
 
 [lang="hi"] {
@@ -21,6 +23,7 @@
 
 body {
   font-family: var(--font-family-base);
+  direction: var(--direction);
 }
 
 /* Light and bright background */
@@ -69,25 +72,49 @@ body {
   /* RTL specific styles */
   /* Enhanced RTL support */
   html[dir="rtl"] {
+    /* Fix for RTL text alignment */
+    text-align: right;
+    
     /* Sidebar specific RTL fixes */
     .rtl-sidebar {
       right: 0;
       left: auto;
+      border-right: none !important;
+      border-left: 1px solid #dbeafe !important;
     }
     
     /* Main content RTL fixes */
     .rtl-content {
       text-align: right;
     }
+
+    /* Fix for RTL gradients */
+    .bg-gradient-to-r {
+      background: linear-gradient(to left, var(--tw-gradient-stops)) !important;
+    }
+
+    .bg-gradient-to-l {
+      background: linear-gradient(to right, var(--tw-gradient-stops)) !important;
+    }
+
+    .bg-gradient-to-br {
+      background: linear-gradient(to bottom left, var(--tw-gradient-stops)) !important;
+    }
+
+    .bg-gradient-to-bl {
+      background: linear-gradient(to bottom right, var(--tw-gradient-stops)) !important;
+    }
     
     /* Fix for space utilities in RTL */
-    .space-x-1:not(.space-x-reverse) > :not([hidden]) ~ :not([hidden]),
-    .space-x-2:not(.space-x-reverse) > :not([hidden]) ~ :not([hidden]),
-    .space-x-3:not(.space-x-reverse) > :not([hidden]) ~ :not([hidden]),
-    .space-x-4:not(.space-x-reverse) > :not([hidden]) ~ :not([hidden]),
-    .space-x-6:not(.space-x-reverse) > :not([hidden]) ~ :not([hidden]),
-    .space-x-8:not(.space-x-reverse) > :not([hidden]) ~ :not([hidden]) {
-      --tw-space-x-reverse: 1 !important;
+    .space-x-1 > :not([hidden]) ~ :not([hidden]),
+    .space-x-2 > :not([hidden]) ~ :not([hidden]),
+    .space-x-3 > :not([hidden]) ~ :not([hidden]),
+    .space-x-4 > :not([hidden]) ~ :not([hidden]),
+    .space-x-6 > :not([hidden]) ~ :not([hidden]),
+    .space-x-8 > :not([hidden]) ~ :not([hidden]) {
+      --tw-space-x-reverse: 1;
+      margin-right: calc(var(--tw-space-x-reverse) * var(--tw-space-x));
+      margin-left: 0;
     }
     
     /* Fix for RTL buttons */
@@ -98,7 +125,7 @@ body {
     /* Fix for RTL borders */
     .border-r-4 {
       border-right: 0 !important;
-      border-left: 4px solid;
+      border-left: 4px solid !important;
     }
     
     /* Fix for RTL positioning */
@@ -130,6 +157,41 @@ body {
     .ml-2 { margin-right: 0.5rem !important; }
     .ml-3 { margin-right: 0.75rem !important; }
     .ml-4 { margin-right: 1rem !important; }
+
+    /* Fix for RTL flexbox */
+    .flex-row-reverse {
+      flex-direction: row !important;
+    }
+
+    .flex-row {
+      flex-direction: row-reverse !important;
+    }
+
+    /* Fix for RTL text alignment */
+    .text-left {
+      text-align: right !important;
+    }
+
+    .text-right {
+      text-align: left !important;
+    }
+
+    /* Fix for RTL padding */
+    .pl-10 {
+      padding-left: 0 !important;
+      padding-right: 2.5rem !important;
+    }
+
+    .pr-4 {
+      padding-right: 0 !important;
+      padding-left: 1rem !important;
+    }
+
+    /* Fix for RTL absolute positioning */
+    .left-3 {
+      left: auto !important;
+      right: 0.75rem !important;
+    }
   }
   
   /* Improve text readability on mobile */

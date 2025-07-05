@@ -145,7 +145,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
   
   // Function to handle proper spacing classes based on RTL/LTR
   const getSpacingClasses = (size: number) => {
-    return isRTL ? `space-x-${size} space-x-reverse` : `space-x-${size}`;
+    return `space-x-${size}`;
   };
 
   const Sidebar = ({ mobile = false }: { mobile?: boolean }) => (
@@ -159,9 +159,8 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
       )}
       
       <div className={`flex flex-col ${mobile ? 'w-80' : 'w-80'} bg-white/95 backdrop-blur-md shadow-2xl ${isRTL ? 'border-l' : 'border-r'} border-blue-100 ${mobile ? 'relative z-50' : ''} rtl-sidebar`}>
-        {/* VervConnect Platform Branding */}
-        <div className={`flex items-center justify-between h-16 lg:h-20 px-3 lg:px-4 border-b border-blue-100 ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-sky-50 via-blue-50 to-indigo-50`}>
-          <div className={`flex items-center ${getSpacingClasses(2)} w-full min-w-0`}>
+        <div className="flex items-center justify-between h-16 lg:h-20 px-3 lg:px-4 border-b border-blue-100 bg-gradient-to-r from-sky-50 via-blue-50 to-indigo-50">
+          <div className={`flex items-center space-x-2 w-full min-w-0`}>
             {/* Home button - positioned to the left */}
             <button
               onClick={() => handleModuleChange('dashboard')}
@@ -171,7 +170,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
             </button>
             
             {/* Logo and text container with proper spacing */}
-            <div className={`flex items-center ${isRTL ? 'lg:space-x-3 lg:space-x-reverse space-x-2 space-x-reverse' : 'space-x-2 lg:space-x-3'} flex-1 min-w-0`}>
+            <div className="flex items-center space-x-2 lg:space-x-3 flex-1 min-w-0">
               <VervConnectLogo size={mobile ? "sm" : "md"} animated={true} />
               <div className="flex-1 min-w-0">
                 <h1 className="text-lg lg:text-xl font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent leading-tight truncate">
@@ -196,9 +195,9 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
         </div>
 
         {/* Hotel Info Section */}
-        <div className={`p-3 lg:p-4 border-b border-blue-100 ${isRTL ? 'bg-gradient-to-l text-right' : 'bg-gradient-to-r text-left'} from-blue-50 to-indigo-50`}>
+        <div className="p-3 lg:p-4 border-b border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50">
           <div className="p-3 lg:p-4 rounded-2xl bg-white/80 backdrop-blur-sm border border-blue-200 shadow-sm">
-            <div className={`flex items-center ${getSpacingClasses(3)}`}>
+            <div className="flex items-center space-x-3">
               {branding.logoUrl ? (
                 <img
                   src={branding.logoUrl}
@@ -230,7 +229,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           </div>
         </div>
 
-        <div className={`flex-1 px-3 lg:px-4 py-4 lg:py-6 overflow-y-auto ${isRTL ? 'bg-gradient-to-t' : 'bg-gradient-to-b'} from-white to-blue-50`}>
+        <div className="flex-1 px-3 lg:px-4 py-4 lg:py-6 overflow-y-auto bg-gradient-to-b from-white to-blue-50">
           <nav className="space-y-1 lg:space-y-2">
             {modules.map((module) => {
               const Icon = module.icon;
@@ -239,11 +238,10 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
               return (
                 <button
                   key={module.id}
-                  onClick={() => handleModuleChange(module.id)}
-                  className={`w-full flex items-center ${getSpacingClasses(3)} px-3 lg:px-4 py-3 lg:py-3 rounded-xl ${isRTL ? 'text-right' : 'text-left'} transition-all relative touch-manipulation ${
-                    isActive 
-                      ? `${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-blue-100 to-indigo-100 text-blue-800 ${isRTL ? 'border-l-4 border-blue-500' : 'border-r-4 border-blue-500'} shadow-md` 
-                      : `text-gray-700 hover:${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100`
+                  onClick={() => handleModuleChange(module.id)} 
+                  className={`w-full flex items-center space-x-3 px-3 lg:px-4 py-3 lg:py-3 rounded-xl transition-all relative touch-manipulation ${
+                    isActive ? 'bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 border-r-4 border-blue-500 shadow-md' : 
+                    'text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100'
                   }`}
                 >
                   <Icon className="w-5 h-5 flex-shrink-0" />
@@ -259,8 +257,8 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           </nav>
         </div>
 
-        <div className={`p-3 lg:p-4 border-t border-blue-100 ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-blue-50 to-indigo-50`}>
-          <div className={`flex items-center ${getSpacingClasses(3)} mb-3 lg:mb-4`}>
+        <div className="p-3 lg:p-4 border-t border-blue-100 bg-gradient-to-r from-blue-50 to-indigo-50">
+          <div className="flex items-center space-x-3 mb-3 lg:mb-4">
             <div className={`w-8 h-8 lg:w-10 lg:h-10 ${getRoleBadgeColor(user?.role || '')} rounded-full flex items-center justify-center shadow-sm flex-shrink-0`}>
               <span className="text-white font-medium text-sm lg:text-base">
                 {user?.name?.charAt(0) || 'U'}
@@ -275,8 +273,8 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           </div>
           
           {/* Current Time Display */}
-          <div className={`mb-3 p-2 lg:p-3 rounded-xl ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-sky-100 to-blue-100 border border-sky-200`}>
-            <div className={`flex items-center ${getSpacingClasses(2)}`}>
+          <div className="mb-3 p-2 lg:p-3 rounded-xl bg-gradient-to-r from-sky-100 to-blue-100 border border-sky-200">
+            <div className="flex items-center space-x-2">
               <Bell className="w-4 h-4 text-sky-600 flex-shrink-0" />
               <span className="text-sm font-medium text-sky-800 truncate">
                 {formatTime(getCurrentTime())}
@@ -289,8 +287,8 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           
           {/* Notification Bell */}
           {unreadCount > 0 && (
-            <div className={`mb-3 p-2 lg:p-3 rounded-xl ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-red-100 to-rose-100 border border-red-200`}>
-              <div className={`flex items-center ${getSpacingClasses(2)}`}>
+            <div className="mb-3 p-2 lg:p-3 rounded-xl bg-gradient-to-r from-red-100 to-rose-100 border border-red-200">
+              <div className="flex items-center space-x-2">
                 <Bell className="w-4 h-4 text-red-600 flex-shrink-0" />
                 <span className="text-sm font-medium text-red-800 truncate">
                   {unreadCount} unread message{unreadCount !== 1 ? 's' : ''}
@@ -307,8 +305,8 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           
           <div className="rtl-aware-button">
             <button
-              onClick={logout}
-              className={`w-full flex items-center ${getSpacingClasses(3)} px-3 lg:px-4 py-2 lg:py-2 rounded-xl transition-all text-gray-700 hover:${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100 touch-manipulation`}
+              onClick={logout} 
+              className="w-full flex items-center space-x-3 px-3 lg:px-4 py-2 lg:py-2 rounded-xl transition-all text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100 touch-manipulation"
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
               <span className="text-sm lg:text-base">{t('common.logout')}</span>
@@ -326,8 +324,8 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-blue-100 lg:hidden">
-          <div className={`flex items-center justify-between h-14 px-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
-            <div className={`flex items-center ${getSpacingClasses(2)}`}>
+          <div className="flex items-center justify-between h-14 px-4">
+            <div className="flex items-center space-x-2">
               {/* Home button - moved to left of logo */}
               <button
                 onClick={() => handleModuleChange('dashboard')}
@@ -345,15 +343,13 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
             </div>
             
             <div className="flex items-center space-x-2 flex-1 justify-center min-w-0">
-              <div className="flex items-center">
-                <VervConnectLogo size="sm" animated={true} />
-              </div>
+              <VervConnectLogo size="sm" animated={true} />
               <div className="text-lg font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent truncate">
                 VervConnect
               </div>
             </div>
             
-            <div className={`flex items-center ${getSpacingClasses(2)} flex-shrink-0`}>
+            <div className="flex items-center space-x-2 flex-shrink-0">
               {unreadCount > 0 && (
                 <button
                   onClick={() => handleModuleChange('communications')}
@@ -369,7 +365,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           </div>
         </header>
 
-        <main className={`flex-1 overflow-auto ${isRTL ? 'bg-gradient-to-bl rtl-content' : 'bg-gradient-to-br'} from-blue-50 via-white to-indigo-50`}>
+        <main className="flex-1 overflow-auto bg-gradient-to-br from-blue-50 via-white to-indigo-50">
           <div className="min-h-full">
             {children}
           </div>

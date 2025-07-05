@@ -57,7 +57,7 @@ export function LanguageSettings() {
   const saveSettings = () => {
     // In a real app, this would save settings to a database or localStorage
     localStorage.setItem('dateFormat', dateFormat);
-    localStorage.setItem('timeFormat', timeFormat); 
+    localStorage.setItem('timeFormat', timeFormat);
     localStorage.setItem('i18nextLng', selectedLanguage);
     
     // Apply interface direction - this is now handled by i18n.on('languageChanged')
@@ -76,11 +76,19 @@ export function LanguageSettings() {
       // Apply RTL/LTR direction immediately
       document.documentElement.dir = interfaceDirection;
       document.documentElement.lang = selectedLanguage;
+
+      // Force reload to apply RTL/LTR changes properly
+      const rtlLanguages = ['ar'];
+      const currentDir = document.documentElement.dir;
+      const newDir = rtlLanguages.includes(selectedLanguage) ? 'rtl' : 'ltr';
       
-      // Reload the page after a short delay to show the success message
-      setTimeout(() => {
-        window.location.reload();
-      }, 500);
+      // Only reload if direction is changing
+      if (currentDir !== newDir) {
+        // Reload the page after a short delay to show the success message
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      }
     }, 3000);
   };
 

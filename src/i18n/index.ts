@@ -14,12 +14,6 @@ const setDocumentDirection = (language: string) => {
   const direction = rtlLanguages.includes(language) ? 'rtl' : 'ltr';
   document.documentElement.dir = direction;
   document.documentElement.lang = language;
-  
-  // Load appropriate font based on language
-  document.documentElement.style.setProperty(
-    '--font-family-base', 
-    fontFamilies[language as keyof typeof fontFamilies] || fontFamilies.default
-  );
 };
 
 // Initialize i18next

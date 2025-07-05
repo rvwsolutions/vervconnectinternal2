@@ -3,7 +3,6 @@ import { useAuth } from '../context/AuthContext';
 import { useCommunication } from '../context/CommunicationContext';
 import { useBranding } from '../context/BrandingContext';
 import { useTranslation } from 'react-i18next';
-import { useTranslation } from 'react-i18next';
 import { VervConnectLogo } from './VervConnectLogo'; 
 import { Hotel, Calendar, Bed, Users, UtensilsCrossed, BarChart3, LogOut, Menu, X, Settings, Shield, ZoomIn as Room, MessageSquare, DollarSign, Bell, Building, Home } from 'lucide-react';
 

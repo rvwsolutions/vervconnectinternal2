@@ -99,6 +99,16 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
         ];
       case 'restaurant':
         return [
+          ...baseModules,
+          { id: 'restaurant', name: t('common.restaurant'), icon: UtensilsCrossed },
+          { id: 'communications', name: t('common.communications'), icon: MessageSquare, badge: unreadCount }
+        ];
+      default:
+        return baseModules;
+    }
+  };
+
+  const modules = getModulesForRole();
 
   const getRoleDisplayName = (role: string) => {
     switch (role) {
@@ -296,6 +306,28 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
             </button>
           </div>
         </div>
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-indigo-100">
+      <Sidebar mobile={sidebarOpen} />
+      <Sidebar />
+      
+      <div className="lg:pl-80">
+        <div className="sticky top-0 z-40 lg:hidden">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="p-2 m-2 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded-lg transition-colors touch-manipulation"
+          >
+            <Menu className="w-6 h-6" />
+          </button>
+        </div>
+        
+        <main className="p-4 lg:p-6">
+          {children}
+        </main>
       </div>
     </div>
   );

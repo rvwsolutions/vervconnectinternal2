@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import i18n from '../i18n';
 import { 
   Globe, 
   Check, 
@@ -13,7 +14,7 @@ import {
 } from 'lucide-react';
 
 export function LanguageSettings() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.language || 'en');
   const [interfaceDirection, setInterfaceDirection] = useState<'ltr' | 'rtl'>('ltr');

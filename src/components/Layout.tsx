@@ -322,7 +322,6 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           >
             <Menu className="w-5 h-5" />
           </button>
-          </button>
         </div>
         
         <main className="p-4 lg:p-6">

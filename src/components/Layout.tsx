@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useCommunication } from '../context/CommunicationContext';
 import { useBranding } from '../context/BrandingContext';
-import { useTranslation } from 'react-i18next';
 import { VervConnectLogo } from './VervConnectLogo';
 import { Hotel, Calendar, Bed, Users, UtensilsCrossed, BarChart3, LogOut, Menu, X, Settings, Shield, ZoomIn as Room, MessageSquare, DollarSign, Bell, Building, Home } from 'lucide-react';
 
@@ -15,7 +14,6 @@ interface LayoutProps {
 export function Layout({ children, currentModule, onModuleChange }: LayoutProps) {
   const { user, logout } = useAuth();
   const { unreadCount } = useCommunication();
-  const { t } = useTranslation();
   const { branding, formatTime, getCurrentTime } = useBranding();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   
@@ -54,54 +52,55 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
 
   const getModulesForRole = () => {
     const baseModules = [
-      { id: 'dashboard', name: t('common.dashboard'), icon: BarChart3 }
+      { id: 'dashboard', name: 'Dashboard', icon: BarChart3 }
     ];
 
     switch (user?.role) {
       case 'admin':
         return [
           ...baseModules,
-          { id: 'rooms', name: t('common.rooms'), icon: Bed },
-          { id: 'housekeeping', name: t('common.housekeeping'), icon: Calendar },
-          { id: 'banquet', name: t('common.banquet'), icon: Users },
-          { id: 'restaurant', name: t('common.restaurant'), icon: UtensilsCrossed },
-          { id: 'room-service', name: t('common.roomService'), icon: Room },
-          { id: 'communications', name: t('common.communications'), icon: MessageSquare, badge: unreadCount },
-          { id: 'financial', name: t('common.financial'), icon: DollarSign },
-          { id: 'admin', name: t('common.admin'), icon: Shield }
+          { id: 'rooms', name: 'Rooms & Bookings', icon: Bed },
+          { id: 'housekeeping', name: 'Housekeeping', icon: Calendar },
+          { id: 'banquet', name: 'Banquet Halls', icon: Users },
+          { id: 'restaurant', name: 'Restaurant', icon: UtensilsCrossed },
+          { id: 'room-service', name: 'Room Service', icon: Room },
+          { id: 'communications', name: 'Communications', icon: MessageSquare, badge: unreadCount },
+          { id: 'financial', name: 'Financial', icon: DollarSign },
+          { id: 'admin', name: 'Administration', icon: Shield }
         ];
       case 'manager':
         return [
           ...baseModules,
-          { id: 'rooms', name: t('common.rooms'), icon: Bed },
-          { id: 'housekeeping', name: t('common.housekeeping'), icon: Calendar },
-          { id: 'banquet', name: t('common.banquet'), icon: Users },
-          { id: 'restaurant', name: t('common.restaurant'), icon: UtensilsCrossed },
-          { id: 'room-service', name: t('common.roomService'), icon: Room },
-          { id: 'communications', name: t('common.communications'), icon: MessageSquare, badge: unreadCount },
-          { id: 'financial', name: t('common.financial'), icon: DollarSign }
+          { id: 'rooms', name: 'Rooms & Bookings', icon: Bed },
+          { id: 'housekeeping', name: 'Housekeeping', icon: Calendar },
+          { id: 'banquet', name: 'Banquet Halls', icon: Users },
+          { id: 'restaurant', name: 'Restaurant', icon: UtensilsCrossed },
+          { id: 'room-service', name: 'Room Service', icon: Room },
+          { id: 'communications', name: 'Communications', icon: MessageSquare, badge: unreadCount },
+          { id: 'financial', name: 'Financial', icon: DollarSign }
         ];
       case 'front-desk':
         return [
           ...baseModules,
-          { id: 'rooms', name: t('common.rooms'), icon: Bed },
-          { id: 'banquet', name: t('common.banquet'), icon: Users },
-          { id: 'restaurant', name: t('common.restaurant'), icon: UtensilsCrossed },
-          { id: 'room-service', name: t('common.roomService'), icon: Room },
-          { id: 'communications', name: t('common.communications'), icon: MessageSquare, badge: unreadCount }
+          { id: 'rooms', name: 'Rooms & Bookings', icon: Bed },
+          { id: 'banquet', name: 'Banquet Halls', icon: Users },
+          { id: 'restaurant', name: 'Restaurant', icon: UtensilsCrossed },
+          { id: 'room-service', name: 'Room Service', icon: Room },
+          { id: 'communications', name: 'Communications', icon: MessageSquare, badge: unreadCount }
         ];
       case 'housekeeping':
         return [
           ...baseModules,
-          { id: 'housekeeping', name: t('common.housekeeping'), icon: Calendar },
-          { id: 'rooms', name: t('common.rooms'), icon: Bed },
-          { id: 'communications', name: t('common.communications'), icon: MessageSquare, badge: unreadCount }
+          { id: 'housekeeping', name: 'Housekeeping', icon: Calendar },
+          { id: 'rooms', name: 'Room Status', icon: Bed },
+          { id: 'communications', name: 'Communications', icon: MessageSquare, badge: unreadCount }
         ];
       case 'restaurant':
         return [
           ...baseModules,
-          { id: 'restaurant', name: t('common.restaurant'), icon: UtensilsCrossed },
-          { id: 'communications', name: t('common.communications'), icon: MessageSquare, badge: unreadCount }
+          { id: 'restaurant', name: 'Restaurant', icon: UtensilsCrossed },
+          { id: 'room-service', name: 'Room Service', icon: Room },
+          { id: 'communications', name: 'Communications', icon: MessageSquare, badge: unreadCount }
         ];
       default:
         return baseModules;
@@ -321,8 +320,8 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
             onClick={() => setSidebarOpen(true)}
             className="p-2 m-2 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded-lg transition-colors touch-manipulation"
           >
-            <Menu className="w-6 h-6" />
-          </button>
+            <LogOut className={`w-5 h-5 flex-shrink-0 ${isRTL ? 'transform rotate-180' : ''}`} />
+            <span className="text-sm lg:text-base">Sign out</span>
         </div>
         
         <main className="p-4 lg:p-6">

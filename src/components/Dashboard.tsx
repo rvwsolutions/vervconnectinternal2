@@ -3,7 +3,6 @@ import { useAuth } from '../context/AuthContext';
 import { useHotel } from '../context/HotelContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { useBranding } from '../context/BrandingContext';
-import { useTranslation } from 'react-i18next';
 import { Bed, Users, Calendar, UtensilsCrossed, Coins, TrendingUp, Clock, CheckCircle, ArrowRight, AlertCircle, Plus, Eye, Home, Wrench, Sparkles, UserCheck, LogIn, LogOut, User, Phone, Mail, MapPin, Star, Timer, UserX, Check as CheckIn, Check as CheckOut, ChevronDown } from 'lucide-react';
 
 interface DashboardProps {
@@ -11,7 +10,6 @@ interface DashboardProps {
 }
 
 export function Dashboard({ onModuleChange }: DashboardProps) {
-  const { t } = useTranslation();
   const { user, getEmployeesOnShift } = useAuth();
   const { rooms, bookings, banquetBookings, restaurantTables, roomServiceOrders, guests } = useHotel();
   const { formatCurrency, hotelSettings, convertAmount, getCurrencySymbol } = useCurrency();
@@ -148,9 +146,9 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
   const getGreeting = () => {
     const currentTime = getCurrentTime();
     const hour = parseInt(currentTime.split(':')[0]);
-    if (hour < 12) return `${t('common.welcome')} - Good morning`;
-    if (hour < 18) return `${t('common.welcome')} - Good afternoon`;
-    return `${t('common.welcome')} - Good evening`;
+    if (hour < 12) return 'Good morning';
+    if (hour < 18) return 'Good afternoon';
+    return 'Good evening';
   };
 
   // Get VIP tier badge color
@@ -209,7 +207,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
     switch (user?.role) {
       case 'housekeeping':
         return {
-          title: t('common.housekeeping'),
+          title: 'Housekeeping Dashboard',
           subtitle: 'Your room cleaning assignments and status updates',
           primaryStats: [
             {
@@ -240,7 +238,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
       
       case 'restaurant':
         return {
-          title: t('common.restaurant'),
+          title: 'Restaurant Dashboard',
           subtitle: 'Restaurant operations and room service management',
           primaryStats: [
             {
@@ -309,7 +307,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
       
       default:
         return {
-          title: t('dashboard.welcomeMessage'),
+          title: 'Welcome to VervConnect',
           subtitle: `Here's what's happening at ${branding.hotelName} today`,
           primaryStats: [
             {
@@ -542,7 +540,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
             <div className="mt-3 flex items-center space-x-2">
               <div className={`h-1 w-8 lg:w-12 ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-orange-400 via-pink-500 to-purple-600 rounded-full`}></div>
               <span className="text-sm font-medium bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 bg-clip-text text-transparent">
-                {t('dashboard.tagline')}
+                Connect with Comfort
               </span>
               <div className={`h-1 w-8 lg:w-12 ${isRTL ? 'bg-gradient-to-l' : 'bg-gradient-to-r'} from-teal-400 via-blue-500 to-green-500 rounded-full`}></div>
             </div>

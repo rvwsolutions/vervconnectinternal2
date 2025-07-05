@@ -5,13 +5,10 @@
 /* Font family for different languages */
 :root {
   --font-family-base: 'Noto Sans', sans-serif;
-  --direction: ltr;
-  --direction: ltr;
 }
 
 [lang="ar"] {
   --font-family-base: 'Noto Sans Arabic', sans-serif;
-  --direction: rtl;
 }
 
 [lang="hi"] {
@@ -24,25 +21,6 @@
 
 body {
   font-family: var(--font-family-base);
-  direction: var(--direction);
-}
-
-[lang="ar"] {
-  --font-family-base: 'Noto Sans Arabic', sans-serif;
-  --direction: rtl;
-}
-
-[lang="hi"] {
-  --font-family-base: 'Noto Sans Devanagari', sans-serif;
-}
-
-[lang="te"] {
-  --font-family-base: 'Noto Sans Telugu', sans-serif;
-}
-
-body {
-  font-family: var(--font-family-base);
-  direction: var(--direction);
 }
 
 /* Light and bright background */
@@ -77,113 +55,6 @@ body {
   }
   
   /* RTL Support */
-  [dir="rtl"] .touch-manipulation {
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-  
-  /* RTL Support */
-  [dir="rtl"] .touch-manipulation {
-    touch-action: manipulation;
-    -webkit-tap-highlight-color: transparent;
-  }
-  
-  /* Ensure minimum touch target size */
-  button, .touch-manipulation {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  /* RTL specific styles */
-  /* Enhanced RTL support */
-  html[dir="rtl"] {
-    /* Fix for RTL text alignment */
-    text-align: right;
-    
-    /* Sidebar specific RTL fixes */
-    .rtl-sidebar {
-      right: 0;
-      left: auto !important;
-      border-right: none !important;
-      border-left: 1px solid #dbeafe !important;
-    }
-    
-    /* Main content RTL fixes */
-    .rtl-content {
-      text-align: right;
-    }
-
-    /* Fix for RTL gradients */
-    .bg-gradient-to-r {
-      background: linear-gradient(to left, var(--tw-gradient-stops)) !important;
-    }
-
-    .bg-gradient-to-l {
-      background: linear-gradient(to right, var(--tw-gradient-stops)) !important;
-    }
-
-    .bg-gradient-to-br {
-      background: linear-gradient(to bottom left, var(--tw-gradient-stops)) !important;
-    }
-
-    .bg-gradient-to-bl {
-      background: linear-gradient(to bottom right, var(--tw-gradient-stops)) !important;
-    }
-    
-    /* Fix for space utilities in RTL */
-    .space-x-1 > :not([hidden]) ~ :not([hidden]),
-    .space-x-2 > :not([hidden]) ~ :not([hidden]),
-    .space-x-3 > :not([hidden]) ~ :not([hidden]),
-    .space-x-4 > :not([hidden]) ~ :not([hidden]),
-    .space-x-6 > :not([hidden]) ~ :not([hidden]),
-    .space-x-8 > :not([hidden]) ~ :not([hidden]) {
-      --tw-space-x-reverse: 1 !important;
-    }
-    
-    /* Fix for RTL buttons */
-    .rtl-aware-button {
-      direction: rtl;
-    }
-    
-    /* Fix for RTL borders */
-    .border-r-4 {
-      border-right: 0 !important;
-      border-left: 4px solid !important;
-    }
-    
-    /* Fix for RTL positioning */
-    .right-3 {
-      right: auto !important;
-      left: 3rem !important;
-    }
-    
-    .left-3 {
-      left: auto !important;
-      right: 3rem !important;
-    }
-    
-    /* Fix for RTL margins */
-    .mr-1, .mr-2, .mr-3, .mr-4 {
-      margin-right: 0 !important;
-    }
-    
-    .ml-1, .ml-2, .ml-3, .ml-4 {
-      margin-left: 0 !important;
-    }
-    
-    .mr-1 { margin-left: 0.25rem !important; }
-    .mr-2 { margin-left: 0.5rem !important; }
-    .mr-3 { margin-left: 0.75rem !important; }
-    .mr-4 { margin-left: 1rem !important; }
-    
-    .ml-1 { margin-right: 0.25rem !important; }
-    .ml-2 { margin-right: 0.5rem !important; }
-    .ml-3 { margin-right: 0.75rem !important; }
-    .ml-4 { margin-right: 1rem !important; }
-  }
-  
-  /* RTL specific styles */
-  /* Enhanced RTL support */
   html[dir="rtl"] {
     /* Fix for RTL text alignment */
     text-align: right;
@@ -270,41 +141,6 @@ body {
     .ml-2 { margin-right: 0.5rem !important; }
     .ml-3 { margin-right: 0.75rem !important; }
     .ml-4 { margin-right: 1rem !important; }
-
-    /* Fix for RTL flexbox */
-    .flex-row-reverse {
-      flex-direction: row !important;
-    }
-
-    .flex-row {
-      flex-direction: row-reverse !important;
-    }
-
-    /* Fix for RTL text alignment */
-    .text-left {
-      text-align: right !important;
-    }
-
-    .text-right {
-      text-align: left !important;
-    }
-
-    /* Fix for RTL padding */
-    .pl-10 {
-      padding-left: 0 !important;
-      padding-right: 2.5rem !important;
-    }
-
-    .pr-4 {
-      padding-right: 0 !important;
-      padding-left: 1rem !important;
-    }
-
-    /* Fix for RTL absolute positioning */
-    .left-3 {
-      left: auto !important;
-      right: 0.75rem !important;
-    }
   }
   
   /* Improve text readability on mobile */

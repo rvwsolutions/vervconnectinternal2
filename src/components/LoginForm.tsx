@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useBranding } from '../context/BrandingContext';
 import { VervConnectLogo } from './VervConnectLogo';
-import { useTranslation } from 'react-i18next';
 import { Lock, Mail, Shield } from 'lucide-react';
 
 export function LoginForm() {
-  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -15,11 +13,11 @@ export function LoginForm() {
   const { branding } = useBranding();
 
   const demoAccounts = [
-    { role: 'admin', email: 'admin@harmonysuite.com', name: `${t('auth.administrator')} - Alex Thompson`, icon: Shield, color: 'purple' },
-    { role: 'manager', email: 'sarah@harmonysuite.com', name: `${t('auth.manager')} - Sarah Johnson`, icon: Shield, color: 'blue' },
-    { role: 'front-desk', email: 'mike@harmonysuite.com', name: `${t('auth.frontDesk')} - Mike Chen`, icon: Shield, color: 'green' },
-    { role: 'housekeeping', email: 'lisa@harmonysuite.com', name: `${t('auth.housekeeping')} - Lisa Rodriguez`, icon: Shield, color: 'orange' },
-    { role: 'restaurant', email: 'david@harmonysuite.com', name: `${t('auth.restaurant')} - David Kim`, icon: Shield, color: 'red' },
+    { role: 'admin', email: 'admin@harmonysuite.com', name: 'Alex Thompson - Administrator', icon: Shield, color: 'purple' },
+    { role: 'manager', email: 'sarah@harmonysuite.com', name: 'Sarah Johnson - Manager', icon: Shield, color: 'blue' },
+    { role: 'front-desk', email: 'mike@harmonysuite.com', name: 'Mike Chen - Front Desk', icon: Shield, color: 'green' },
+    { role: 'housekeeping', email: 'lisa@harmonysuite.com', name: 'Lisa Rodriguez - Housekeeping', icon: Shield, color: 'orange' },
+    { role: 'restaurant', email: 'david@harmonysuite.com', name: 'David Kim - Restaurant', icon: Shield, color: 'red' },
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -67,15 +65,12 @@ export function LoginForm() {
               {/* VervConnect Logo with bright branding */}
               <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-4 lg:mb-6">
                 <VervConnectLogo size="xl" animated={true} />
-                <div className="text-center sm:text-left">
-                  <span className="text-sm font-medium text-blue-800">{t('auth.adminAccess')}</span>
-                </div>
               </div>
               
               {/* Tagline with bright colors */}
               <div className="mb-4">
                 <p className="text-lg lg:text-xl font-semibold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  {t('auth.adminAccessDescription')}
+                  "Connect with Comfort"
                 </p>
               </div>
             </div>
@@ -84,7 +79,9 @@ export function LoginForm() {
 
           <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.email')}</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
@@ -99,7 +96,9 @@ export function LoginForm() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">{t('auth.password')}</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                 <input
@@ -117,7 +116,7 @@ export function LoginForm() {
               disabled={isLoading}
               className="w-full py-3 px-4 rounded-xl font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 transition-all disabled:opacity-50 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] touch-manipulation"
             >
-              {isLoading ? 'Signing in...' : t('auth.signIn')}
+              {isLoading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 
@@ -127,7 +126,7 @@ export function LoginForm() {
                 <div className="w-full border-t border-gray-200" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-3 bg-white text-gray-600 rounded-full font-medium">{t('auth.demoAccounts')}</span>
+                <span className="px-3 bg-white text-gray-600 rounded-full font-medium">Demo Accounts</span>
               </div>
             </div>
 

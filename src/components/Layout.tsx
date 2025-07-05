@@ -312,22 +312,57 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-indigo-100">
+    <div className="flex h-screen overflow-hidden">
       <Sidebar />
       {sidebarOpen && <Sidebar mobile />}
-      
-      <div className="lg:pl-80">
-        <div className="sticky top-0 z-40 lg:hidden">
-          <button
-            onClick={() => setSidebarOpen(true)}
-            className="lg:hidden flex-shrink-0 p-2 hover:bg-blue-100 rounded-lg transition-colors touch-manipulation" 
-          >
-            <Menu className="w-5 h-5" />
-          </button>
-        </div>
-        
-        <main className="p-4 lg:p-6"> 
-          {children}
+
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-blue-100 lg:hidden">
+          <div className="flex items-center justify-between h-14 px-4">
+            <div className="flex items-center space-x-2">
+              {/* Home button - moved to left of logo */}
+              <button
+                onClick={() => handleModuleChange('dashboard')}
+                className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded-lg transition-colors touch-manipulation"
+              >
+                <Home className="w-5 h-5" />
+              </button>
+              
+              <button
+                onClick={() => setSidebarOpen(true)}
+                className="text-blue-600 hover:text-blue-800 flex-shrink-0 p-2 hover:bg-blue-100 rounded-lg transition-colors touch-manipulation"
+              >
+                <Menu className="w-6 h-6" />
+              </button>
+            </div>
+            
+            <div className="flex items-center space-x-2 flex-1 justify-center min-w-0">
+              <VervConnectLogo size="sm" animated={true} />
+              <div className="text-lg font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent truncate">
+                VervConnect
+              </div>
+            </div>
+            
+            <div className="flex items-center space-x-2 flex-shrink-0">
+              {unreadCount > 0 && (
+                <button
+                  onClick={() => handleModuleChange('communications')}
+                  className="relative p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded-lg transition-colors touch-manipulation"
+                >
+                  <Bell className="w-5 h-5" />
+                  <span className="absolute -top-1 -right-1 bg-gradient-to-r from-red-400 to-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow-sm">
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </span>
+                </button>
+              )}
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 overflow-auto bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+          <div className="min-h-full">
+            {children}
+          </div>
         </main>
       </div>
     </div>

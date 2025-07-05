@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCommunication } from '../context/CommunicationContext';
 import { useBranding } from '../context/BrandingContext';
 import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { VervConnectLogo } from './VervConnectLogo'; 
 import { Hotel, Calendar, Bed, Users, UtensilsCrossed, BarChart3, LogOut, Menu, X, Settings, Shield, ZoomIn as Room, MessageSquare, DollarSign, Bell, Building, Home } from 'lucide-react';
 
@@ -16,8 +17,12 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
   const { user, logout } = useAuth();
   const { unreadCount } = useCommunication();
   const { t } = useTranslation();
+  const { t } = useTranslation();
   const { branding, formatTime, getCurrentTime } = useBranding();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  
+  // Determine if the current language is RTL
+  const isRTL = document.documentElement.dir === 'rtl';
   
   // Determine if the current language is RTL
   const isRTL = document.documentElement.dir === 'rtl';
@@ -141,6 +146,11 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
 
   const closeSidebar = () => {
     setSidebarOpen(false);
+  };
+  
+  // Function to handle proper spacing classes based on RTL/LTR
+  const getSpacingClasses = (size: number) => {
+    return `space-x-${size}`;
   };
   
   // Function to handle proper spacing classes based on RTL/LTR
@@ -310,6 +320,8 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
               <span className="text-sm lg:text-base">{t('common.logout')}</span>
+            </button>
+          </div>
             </button>
           </div>
         </div>

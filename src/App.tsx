@@ -8,6 +8,7 @@ import { OperationsProvider } from './context/OperationsContext';
 import { SecurityProvider } from './context/SecurityContext';
 import { BrandingProvider } from './context/BrandingContext';
 import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { LoginForm } from './components/LoginForm';
 import { Layout } from './components/Layout';
 import { Dashboard } from './components/Dashboard';
@@ -21,6 +22,7 @@ import { CommunicationHub } from './components/CommunicationHub';
 import { FinancialManagement } from './components/FinancialManagement';
 
 function AppContent() {
+  const { t } = useTranslation();
   const { t } = useTranslation();
   const { isAuthenticated, user } = useAuth();
   const [currentModule, setCurrentModule] = useState('dashboard');
@@ -116,6 +118,15 @@ function AppContent() {
 }
 
 function App() {
+  const { i18n } = useTranslation();
+  
+  // Apply RTL/LTR direction based on current language
+  useEffect(() => {
+    const rtlLanguages = ['ar'];
+    document.documentElement.dir = rtlLanguages.includes(i18n.language) ? 'rtl' : 'ltr';
+    document.documentElement.lang = i18n.language;
+  }, [i18n.language]);
+  
   const { i18n } = useTranslation();
   
   // Apply RTL/LTR direction based on current language

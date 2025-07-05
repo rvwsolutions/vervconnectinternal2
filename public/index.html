@@ -67,6 +67,66 @@
         flex-direction: row-reverse !important;
       }
     </style>
+    
+    <!-- Font support for multiple languages -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Telugu:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+      /* Global RTL support */
+      html[dir="rtl"] {
+        text-align: right;
+      }
+      
+      /* Fix for RTL layout */
+      html[dir="rtl"] .space-x-1 > :not([hidden]) ~ :not([hidden]) {
+        --tw-space-x-reverse: 1;
+        margin-right: calc(0.25rem * var(--tw-space-x-reverse));
+        margin-left: calc(0.25rem * calc(1 - var(--tw-space-x-reverse)));
+      }
+      
+      html[dir="rtl"] .space-x-2 > :not([hidden]) ~ :not([hidden]) {
+        --tw-space-x-reverse: 1;
+        margin-right: calc(0.5rem * var(--tw-space-x-reverse));
+        margin-left: calc(0.5rem * calc(1 - var(--tw-space-x-reverse)));
+      }
+      
+      html[dir="rtl"] .space-x-3 > :not([hidden]) ~ :not([hidden]) {
+        --tw-space-x-reverse: 1;
+        margin-right: calc(0.75rem * var(--tw-space-x-reverse));
+        margin-left: calc(0.75rem * calc(1 - var(--tw-space-x-reverse)));
+      }
+      
+      html[dir="rtl"] .space-x-4 > :not([hidden]) ~ :not([hidden]) {
+        --tw-space-x-reverse: 1;
+        margin-right: calc(1rem * var(--tw-space-x-reverse));
+        margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+      }
+      
+      /* Fix for RTL sidebar */
+      html[dir="rtl"] .rtl-sidebar {
+        right: 0;
+        left: auto !important;
+      }
+      
+      /* Fix for RTL text alignment */
+      html[dir="rtl"] .text-left {
+        text-align: right !important;
+      }
+      
+      html[dir="rtl"] .text-right {
+        text-align: left !important;
+      }
+      
+      /* Fix for RTL flexbox */
+      html[dir="rtl"] .flex-row {
+        flex-direction: row-reverse !important;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

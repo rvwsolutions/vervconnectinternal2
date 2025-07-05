@@ -165,7 +165,7 @@ export function LanguageSettings() {
                   onChange={() => {
                     setInterfaceDirection('ltr');
                     // If changing to LTR but language is RTL, switch to English
-                    if (rtlLanguages.includes(selectedLanguage)) {
+                    if (selectedLanguage === 'ar') {
                       setSelectedLanguage('en');
                       i18n.changeLanguage('en');
                     }
@@ -185,7 +185,7 @@ export function LanguageSettings() {
                   onChange={() => {
                     setInterfaceDirection('rtl');
                     // If changing to RTL but language is not RTL, switch to Arabic
-                    if (!rtlLanguages.includes(selectedLanguage)) {
+                    if (selectedLanguage !== 'ar') {
                       setSelectedLanguage('ar');
                       i18n.changeLanguage('ar');
                     }

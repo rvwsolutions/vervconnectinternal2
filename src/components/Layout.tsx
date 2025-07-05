@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { useCommunication } from '../context/CommunicationContext';
 import { useBranding } from '../context/BrandingContext';
@@ -12,6 +13,7 @@ interface LayoutProps {
 }
 
 export function Layout({ children, currentModule, onModuleChange }: LayoutProps) {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const { unreadCount } = useCommunication();
   const { branding, formatTime, getCurrentTime } = useBranding();

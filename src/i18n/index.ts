@@ -11,18 +11,22 @@ import esTranslation from './locales/es.json';
 // Function to handle RTL/LTR direction changes
 const setDocumentDirection = (language: string) => {
   const rtlLanguages = ['ar'];
-  const direction = rtlLanguages.includes(language) ? 'rtl' : 'ltr';
+  const direction = rtlLanguages.includes(language) ? 'rtl' : 'ltr'; 
   document.documentElement.dir = direction;
   document.documentElement.lang = language;
   
-  // Apply additional RTL-specific styles
-  if (direction === 'rtl') {
-    document.documentElement.classList.add('rtl-layout');
-    document.body.classList.add('rtl-layout');
-  } else {
-    document.documentElement.classList.remove('rtl-layout');
-    document.body.classList.remove('rtl-layout');
-  }
+  // Load appropriate font based on language
+  const fontFamilies = {
+    ar: "'Noto Sans Arabic', sans-serif",
+    hi: "'Noto Sans Devanagari', sans-serif",
+    te: "'Noto Sans Telugu', sans-serif",
+    default: "'Noto Sans', sans-serif"
+  };
+  
+  document.documentElement.style.setProperty(
+    '--font-family-base', 
+    fontFamilies[language as keyof typeof fontFamilies] || fontFamilies.default
+  );
 };
 
 // Initialize i18next
@@ -65,6 +69,19 @@ setDocumentDirection(i18n.language);
 // Listen for language changes and update document direction
 i18n.on('languageChanged', (lng) => {
   setDocumentDirection(lng);
+  
+  // Force reload after a short delay to ensure all RTL/LTR changes are applied
+  // This helps with complex layout changes that might not update properly otherwise
+  setTimeout(() => {
+    // Store a flag to prevent infinite reload loops
+    const lastReload = localStorage.getItem('lastLanguageReload');
+    const now = Date.now();
+    
+    if (!lastReload || now - parseInt(lastReload) > 5000) {
+      localStorage.setItem('lastLanguageReload', now.toString());
+      window.location.reload();
+    }
+  }, 500);
 });
 
 export default i18n;

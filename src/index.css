@@ -5,12 +5,10 @@
 /* Font family for different languages */
 :root {
   --font-family-base: 'Noto Sans', sans-serif;
-  --direction: ltr;
 }
 
 [lang="ar"] {
   --font-family-base: 'Noto Sans Arabic', sans-serif;
-  --direction: rtl;
 }
 
 [lang="hi"] {
@@ -23,7 +21,6 @@
 
 body {
   font-family: var(--font-family-base);
-  direction: var(--direction);
 }
 
 /* Light and bright background */
@@ -70,88 +67,69 @@ body {
   }
   
   /* RTL specific styles */
-  [dir="rtl"] {
-    /* Reverse flex direction */
-    .flex-row {
-      flex-direction: row-reverse;
+  /* Enhanced RTL support */
+  html[dir="rtl"] {
+    /* Sidebar specific RTL fixes */
+    .rtl-sidebar {
+      right: 0;
+      left: auto;
     }
     
-    /* Auto margin adjustments */
-    .ml-auto {
-      margin-left: 0;
-      margin-right: auto;
-    }
-    
-    .mr-auto {
-      margin-right: 0;
-      margin-left: auto;
-    }
-    
-    /* Margin adjustments */
-    .ml-1, .ml-2, .ml-3, .ml-4 {
-      margin-left: 0;
-    }
-    
-    .mr-1, .mr-2, .mr-3, .mr-4 {
-      margin-right: 0;
-    }
-    
-    .ml-1 { margin-right: 0.25rem; }
-    .ml-2 { margin-right: 0.5rem; }
-    .ml-3 { margin-right: 0.75rem; }
-    .ml-4 { margin-right: 1rem; }
-    
-    .mr-1 { margin-left: 0.25rem; }
-    .mr-2 { margin-left: 0.5rem; }
-    .mr-3 { margin-left: 0.75rem; }
-    .mr-4 { margin-left: 1rem; }
-    
-    /* Space between adjustments */
-    .space-x-1 > :not([hidden]) ~ :not([hidden]),
-    .space-x-2 > :not([hidden]) ~ :not([hidden]),
-    .space-x-3 > :not([hidden]) ~ :not([hidden]),
-    .space-x-4 > :not([hidden]) ~ :not([hidden]) {
-      --tw-space-x-reverse: 1;
-    }
-    
-    /* Text alignment */
-    .text-left {
+    /* Main content RTL fixes */
+    .rtl-content {
       text-align: right;
     }
     
-    .text-right {
-      text-align: left;
+    /* Fix for space utilities in RTL */
+    .space-x-1:not(.space-x-reverse) > :not([hidden]) ~ :not([hidden]),
+    .space-x-2:not(.space-x-reverse) > :not([hidden]) ~ :not([hidden]),
+    .space-x-3:not(.space-x-reverse) > :not([hidden]) ~ :not([hidden]),
+    .space-x-4:not(.space-x-reverse) > :not([hidden]) ~ :not([hidden]),
+    .space-x-6:not(.space-x-reverse) > :not([hidden]) ~ :not([hidden]),
+    .space-x-8:not(.space-x-reverse) > :not([hidden]) ~ :not([hidden]) {
+      --tw-space-x-reverse: 1 !important;
     }
     
-    /* Border adjustments */
-    .border-r {
-      border-right: none;
-      border-left: 1px solid;
+    /* Fix for RTL buttons */
+    .rtl-aware-button {
+      direction: rtl;
     }
     
-    .border-l {
-      border-left: none;
-      border-right: 1px solid;
+    /* Fix for RTL borders */
+    .border-r-4 {
+      border-right: 0 !important;
+      border-left: 4px solid;
     }
     
-    /* Padding adjustments */
-    .pr-1, .pr-2, .pr-3, .pr-4 {
-      padding-right: 0;
+    /* Fix for RTL positioning */
+    .right-3 {
+      right: auto;
+      left: 3rem;
     }
     
-    .pl-1, .pl-2, .pl-3, .pl-4 {
-      padding-left: 0;
+    .left-3 {
+      left: auto;
+      right: 3rem;
     }
     
-    .pr-1 { padding-left: 0.25rem; }
-    .pr-2 { padding-left: 0.5rem; }
-    .pr-3 { padding-left: 0.75rem; }
-    .pr-4 { padding-left: 1rem; }
+    /* Fix for RTL margins */
+    .mr-1, .mr-2, .mr-3, .mr-4 {
+      margin-right: 0 !important;
+    }
     
-    .pl-1 { padding-right: 0.25rem; }
-    .pl-2 { padding-right: 0.5rem; }
-    .pl-3 { padding-right: 0.75rem; }
-    .pl-4 { padding-right: 1rem; }
+    .ml-1, .ml-2, .ml-3, .ml-4 {
+      margin-left: 0 !important;
+    }
+    
+    .mr-1 { margin-left: 0.25rem !important; }
+    .mr-2 { margin-left: 0.5rem !important; }
+    .mr-3 { margin-left: 0.75rem !important; }
+    .mr-4 { margin-left: 1rem !important; }
+    
+    .ml-1 { margin-right: 0.25rem !important; }
+    .ml-2 { margin-right: 0.5rem !important; }
+    .ml-3 { margin-right: 0.75rem !important; }
+    .ml-4 { margin-right: 1rem !important; }
   }
   
   /* Improve text readability on mobile */

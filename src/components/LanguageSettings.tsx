@@ -67,9 +67,20 @@ export function LanguageSettings() {
     // Show success message
     setShowSuccessMessage(true);
     setTimeout(() => {
-      setShowSuccessMessage(false);
-      // Reload the page to apply all language changes fully
-      window.location.reload();
+      // Store current language in localStorage before reload
+      localStorage.setItem('i18nextLng', selectedLanguage);
+      
+      // Set a flag to indicate we're changing language to prevent infinite reload
+      localStorage.setItem('languageChangeInProgress', 'true');
+      
+      // Apply RTL/LTR direction immediately
+      document.documentElement.dir = interfaceDirection;
+      document.documentElement.lang = selectedLanguage;
+      
+      // Reload the page after a short delay to show the success message
+      setTimeout(() => {
+        window.location.reload();
+      }, 500);
     }, 3000);
   };
 
@@ -142,8 +153,15 @@ export function LanguageSettings() {
                 <input
                   type="radio"
                   name="direction"
-                  checked={interfaceDirection === 'ltr'}
-                  onChange={() => setInterfaceDirection('ltr')}
+                  checked={interfaceDirection === 'ltr'} 
+                  onChange={() => {
+                    setInterfaceDirection('ltr');
+                    // If changing to LTR but language is RTL, switch to English
+                    if (rtlLanguages.includes(selectedLanguage)) {
+                      setSelectedLanguage('en');
+                      i18n.changeLanguage('en');
+                    }
+                  }}
                   className="hidden"
                 />
                 <LayoutGrid className="w-5 h-5" />
@@ -155,8 +173,15 @@ export function LanguageSettings() {
                 <input
                   type="radio"
                   name="direction"
-                  checked={interfaceDirection === 'rtl'}
-                  onChange={() => setInterfaceDirection('rtl')}
+                  checked={interfaceDirection === 'rtl'} 
+                  onChange={() => {
+                    setInterfaceDirection('rtl');
+                    // If changing to RTL but language is not RTL, switch to Arabic
+                    if (!rtlLanguages.includes(selectedLanguage)) {
+                      setSelectedLanguage('ar');
+                      i18n.changeLanguage('ar');
+                    }
+                  }}
                   className="hidden"
                 />
                 <LayoutGrid className="w-5 h-5 transform rotate-180" />

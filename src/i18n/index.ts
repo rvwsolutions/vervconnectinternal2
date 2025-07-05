@@ -16,13 +16,6 @@ const setDocumentDirection = (language: string) => {
   document.documentElement.lang = language;
   
   // Load appropriate font based on language
-  const fontFamilies = {
-    ar: "'Noto Sans Arabic', sans-serif",
-    hi: "'Noto Sans Devanagari', sans-serif",
-    te: "'Noto Sans Telugu', sans-serif",
-    default: "'Noto Sans', sans-serif"
-  };
-  
   document.documentElement.style.setProperty(
     '--font-family-base', 
     fontFamilies[language as keyof typeof fontFamilies] || fontFamilies.default

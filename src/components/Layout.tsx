@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCommunication } from '../context/CommunicationContext';
 import { useBranding } from '../context/BrandingContext';
 import { useTranslation } from 'react-i18next';
-import { VervConnectLogo } from './VervConnectLogo'; 
+import { VervConnectLogo } from './VervConnectLogo';
 import { Hotel, Calendar, Bed, Users, UtensilsCrossed, BarChart3, LogOut, Menu, X, Settings, Shield, ZoomIn as Room, MessageSquare, DollarSign, Bell, Building, Home } from 'lucide-react';
 
 interface LayoutProps {
@@ -19,7 +19,6 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
   const { branding, formatTime, getCurrentTime } = useBranding();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   
-  // Determine if the current language is RTL
   const isRTL = document.documentElement.dir === 'rtl';
 
   // Close sidebar when module changes
@@ -100,17 +99,6 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
         ];
       case 'restaurant':
         return [
-          ...baseModules,
-          { id: 'restaurant', name: t('common.restaurant'), icon: UtensilsCrossed },
-          { id: 'room-service', name: t('common.roomService'), icon: Room },
-          { id: 'communications', name: t('common.communications'), icon: MessageSquare, badge: unreadCount }
-        ];
-      default:
-        return baseModules;
-    }
-  };
-
-  const modules = getModulesForRole();
 
   const getRoleDisplayName = (role: string) => {
     switch (role) {
@@ -141,11 +129,6 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
 
   const closeSidebar = () => {
     setSidebarOpen(false);
-  };
-  
-  // Function to handle proper spacing classes based on RTL/LTR
-  const getSpacingClasses = (size: number) => {
-    return `space-x-${size}`;
   };
 
   const Sidebar = ({ mobile = false }: { mobile?: boolean }) => (
@@ -212,7 +195,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
               <div className="flex-1 min-w-0">
                 <h3 className="text-base lg:text-lg font-bold text-gray-800 truncate">{branding.hotelName}</h3>
                 {branding.starRating > 0 && (
-                  <div className={`flex items-center ${getSpacingClasses(1)} mb-1`}>
+                  <div className="flex items-center space-x-1 mb-1">
                     {Array.from({ length: branding.starRating }, (_, i) => (
                       <span key={i} className="text-yellow-400 text-xs lg:text-sm">★</span>
                     ))}
@@ -313,63 +296,6 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
             </button>
           </div>
         </div>
-      </div>
-    </div>
-  );
-
-  return (
-    <div className="flex h-screen overflow-hidden">
-      <Sidebar />
-      {sidebarOpen && <Sidebar mobile />}
-
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-blue-100 lg:hidden">
-          <div className="flex items-center justify-between h-14 px-4">
-            <div className="flex items-center space-x-2">
-              {/* Home button - moved to left of logo */}
-              <button
-                onClick={() => handleModuleChange('dashboard')}
-                className="p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded-lg transition-colors touch-manipulation"
-              >
-                <Home className="w-5 h-5" />
-              </button>
-              
-              <button
-                onClick={() => setSidebarOpen(true)}
-                className="text-blue-600 hover:text-blue-800 flex-shrink-0 p-2 hover:bg-blue-100 rounded-lg transition-colors touch-manipulation"
-              >
-                <Menu className="w-6 h-6" />
-              </button>
-            </div>
-            
-            <div className="flex items-center space-x-2 flex-1 justify-center min-w-0">
-              <VervConnectLogo size="sm" animated={true} />
-              <div className="text-lg font-bold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent truncate">
-                VervConnect
-              </div>
-            </div>
-            
-            <div className="flex items-center space-x-2 flex-shrink-0">
-              {unreadCount > 0 && (
-                <button
-                  onClick={() => handleModuleChange('communications')}
-                  className="relative p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded-lg transition-colors touch-manipulation"
-                >
-                  <Bell className="w-5 h-5" />
-                  <span className="absolute -top-1 -right-1 bg-gradient-to-r from-red-400 to-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center shadow-sm">
-                    {unreadCount > 99 ? '99+' : unreadCount}
-                  </span>
-                </button>
-              )}
-            </div>
-          </div>
-        </header>
-
-        <main className="flex-1 overflow-auto bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-          <div className="min-h-full">
-            {children}
-          </div>
-        </main>
       </div>
     </div>
   );

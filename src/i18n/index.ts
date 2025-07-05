@@ -107,27 +107,5 @@ i18n.on('languageChanged', (lng) => {
     }
   }, 500);
 });
-  setDocumentDirection(lng);
-  
-  // Force reload after a short delay to ensure all RTL/LTR changes are applied
-  // This helps with complex layout changes that might not update properly otherwise
-  setTimeout(() => {
-    // Only reload if the language change requires it (e.g., switching between RTL and LTR)
-    const rtlLanguages = ['ar'];
-    const currentDir = document.documentElement.dir;
-    const newDir = rtlLanguages.includes(lng) ? 'rtl' : 'ltr';
-
-    if (currentDir !== newDir) {
-      // Store a flag to prevent infinite reload loops
-      const lastReload = localStorage.getItem('lastLanguageReload');
-      const now = Date.now();
-      
-      if (!lastReload || now - parseInt(lastReload) > 5000) {
-        localStorage.setItem('lastLanguageReload', now.toString());
-        window.location.reload();
-      }
-    }
-  }, 500);
-});
 
 export default i18n;

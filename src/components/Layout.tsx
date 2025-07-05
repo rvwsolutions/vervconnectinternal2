@@ -141,7 +141,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
   const closeSidebar = () => {
     setSidebarOpen(false);
   };
-
+  
   const Sidebar = ({ mobile = false }: { mobile?: boolean }) => (
     <div className={`${mobile ? 'fixed inset-0 z-50' : 'hidden lg:flex'} ${mobile ? 'lg:hidden' : ''}`}>
       {mobile && (
@@ -157,7 +157,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           <div className={`flex items-center space-x-2 w-full min-w-0`}>
             {/* Home button - positioned to the left */}
             <button
-              onClick={() => handleModuleChange('dashboard')}
+              onClick={() => handleModuleChange('dashboard')} 
               className="flex-shrink-0 p-2 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded-lg transition-colors touch-manipulation"
             >
               <Home className="w-4 h-4 lg:w-5 lg:h-5" />
@@ -300,7 +300,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           <div className="rtl-aware-button">
             <button
               onClick={logout} 
-              className="w-full flex items-center space-x-3 px-3 lg:px-4 py-2 lg:py-2 rounded-xl transition-all text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100 touch-manipulation"
+              className="w-full flex items-center space-x-3 px-3 lg:px-4 py-2 lg:py-2 rounded-xl transition-all text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100 touch-manipulation" 
             >
               <LogOut className="w-5 h-5 flex-shrink-0" />
               <span className="text-sm lg:text-base">{t('common.logout')}</span>
@@ -313,20 +313,20 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-indigo-100">
-      <Sidebar mobile={sidebarOpen} />
       <Sidebar />
+      {sidebarOpen && <Sidebar mobile />}
       
       <div className="lg:pl-80">
         <div className="sticky top-0 z-40 lg:hidden">
           <button
             onClick={() => setSidebarOpen(true)}
-            className="p-2 m-2 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded-lg transition-colors touch-manipulation"
+            className="lg:hidden flex-shrink-0 p-2 hover:bg-blue-100 rounded-lg transition-colors touch-manipulation" 
           >
             <Menu className="w-5 h-5" />
           </button>
         </div>
         
-        <main className="p-4 lg:p-6">
+        <main className="p-4 lg:p-6"> 
           {children}
         </main>
       </div>

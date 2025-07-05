@@ -7,7 +7,6 @@ import arTranslation from './locales/ar.json';
 import hiTranslation from './locales/hi.json';
 import teTranslation from './locales/te.json';
 import esTranslation from './locales/es.json';
-import esTranslation from './locales/es.json';
 
 // Function to handle RTL/LTR direction changes
 const setDocumentDirection = (language: string) => {
@@ -15,19 +14,6 @@ const setDocumentDirection = (language: string) => {
   const direction = rtlLanguages.includes(language) ? 'rtl' : 'ltr';
   document.documentElement.dir = direction;
   document.documentElement.lang = language;
-  
-  // Load appropriate font based on language
-  const fontFamilies = {
-    ar: "'Noto Sans Arabic', sans-serif",
-    hi: "'Noto Sans Devanagari', sans-serif",
-    te: "'Noto Sans Telugu', sans-serif",
-    default: "'Noto Sans', sans-serif"
-  };
-  
-  document.documentElement.style.setProperty(
-    '--font-family-base', 
-    fontFamilies[language as keyof typeof fontFamilies] || fontFamilies.default
-  );
   
   // Load appropriate font based on language
   const fontFamilies = {
@@ -64,9 +50,6 @@ i18n
       es: {
         translation: esTranslation
       },
-      es: {
-        translation: esTranslation
-      }
     },
     fallbackLng: 'en',
     debug: false,

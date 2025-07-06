@@ -48,7 +48,6 @@ import {
   UserPlus,
   ChevronDown,
   ChevronUp,
-  Users
 } from 'lucide-react';
 import { RoomManagement } from './RoomManagement';
 import { GroupBookingModule } from './GroupBookingModule';

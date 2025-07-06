@@ -37,7 +37,7 @@ i18n
     }
   });
 
-// Set document direction based on language
+// Set the HTML dir attribute based on the current language
 const setDocumentDirection = (language: string) => {
   const isRtl = language === 'ar';
   document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
@@ -48,8 +48,8 @@ const setDocumentDirection = (language: string) => {
 setDocumentDirection(i18n.language);
 
 // Listen for language changes
-i18n.on('languageChanged', (lang) => {
-  setDocumentDirection(lang);
+i18n.on('languageChanged', (lng) => {
+  setDocumentDirection(lng);
 });
 
 export default i18n;

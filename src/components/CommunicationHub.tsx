@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useCommunication } from '../context/CommunicationContext';
 import { useAuth } from '../context/AuthContext';
 import { useHotel } from '../context/HotelContext';
@@ -26,6 +27,7 @@ import {
 } from 'lucide-react';
 
 export function CommunicationHub() {
+  const { t } = useTranslation();
   const { 
     messages, 
     notifications, 
@@ -474,14 +476,14 @@ export function CommunicationHub() {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Communication Hub</h1>
-          <p className="text-gray-600 mt-2">Manage internal messages, notifications, and guest communications</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('communications.communicationHub')}</h1>
+          <p className="text-gray-600 mt-2">{t('communications.manageCommunications')}</p>
         </div>
         <div className="flex items-center space-x-4">
           {unreadCount > 0 && (
             <div className="flex items-center space-x-2 px-4 py-2 bg-red-100 text-red-700 rounded-lg">
               <Bell className="w-5 h-5" />
-              <span className="font-semibold">{unreadCount} unread</span>
+              <span className="font-semibold">{unreadCount} {t('communications.unread')}</span>
             </div>
           )}
           <button
@@ -489,14 +491,14 @@ export function CommunicationHub() {
             className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
           >
             <Mail className="w-4 h-4" />
-            <span>Guest Message</span>
+            <span>{t('communications.guestMessage')}</span>
           </button>
           <button
             onClick={() => setShowComposeMessage(true)}
             className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
           >
             <Plus className="w-4 h-4" />
-            <span>New Message</span>
+            <span>{t('communications.newMessage')}</span>
           </button>
         </div>
       </div>

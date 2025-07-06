@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHotel } from '../context/HotelContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { BanquetHallManagement } from './BanquetHallManagement';
@@ -42,6 +43,7 @@ interface BanquetModuleProps {
 }
 
 export function BanquetModule({ filters }: BanquetModuleProps) {
+  const { t } = useTranslation();
   const { 
     banquetHalls, 
     banquetBookings, 
@@ -1055,8 +1057,8 @@ export function BanquetModule({ filters }: BanquetModuleProps) {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Banquet Halls</h1>
-          {dateFilter === 'today' && (
+          <h1 className="text-3xl font-bold text-gray-900">{t('common.banquet')}</h1>
+          <p className="text-gray-600 mt-2">{t('banquet.manageHalls')}</p>
             <div className="mt-2 flex items-center space-x-2">
               <span className="text-sm text-gray-600">Showing:</span>
               <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-semibold">
@@ -1077,7 +1079,7 @@ export function BanquetModule({ filters }: BanquetModuleProps) {
             className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
           >
             <Eye className="w-4 h-4" />
-            <span>Manage Halls</span>
+            <span>{t('banquet.manageHalls')}</span>
           </button>
           <button
             onClick={() => setShowChargeForm(true)}
@@ -1091,7 +1093,7 @@ export function BanquetModule({ filters }: BanquetModuleProps) {
             className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
           >
             <Plus className="w-4 h-4" />
-            <span>New Booking</span>
+            <span>{t('dashboard.eventBooking')}</span>
           </button>
         </div>
       </div>

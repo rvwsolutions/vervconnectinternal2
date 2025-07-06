@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHotel } from '../context/HotelContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { MenuManagement } from './MenuManagement';
@@ -41,6 +42,7 @@ interface RoomServiceModuleProps {
 }
 
 export function RoomServiceModule({ filters }: RoomServiceModuleProps) {
+  const { t } = useTranslation();
   const { 
     bookings, 
     guests, 
@@ -697,10 +699,10 @@ export function RoomServiceModule({ filters }: RoomServiceModuleProps) {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Room Service</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('roomService.roomService')}</h1>
           {statusFilter && (
             <div className="mt-2 flex items-center space-x-2">
-              <span className="text-sm text-gray-600">Showing:</span>
+              <span className="text-sm text-gray-600">{t('common.filter')}:</span>
               <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold capitalize">
                 {statusFilter === 'pending' ? 'Pending Orders' : `${statusFilter} Orders`}
               </span>
@@ -708,7 +710,7 @@ export function RoomServiceModule({ filters }: RoomServiceModuleProps) {
                 onClick={() => setStatusFilter('')}
                 className="text-indigo-600 hover:text-indigo-800 text-sm"
               >
-                Show All
+                {t('common.view')}
               </button>
             </div>
           )}
@@ -719,7 +721,7 @@ export function RoomServiceModule({ filters }: RoomServiceModuleProps) {
             className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
           >
             <Settings className="w-4 h-4" />
-            <span>Manage Menu</span>
+            <span>{t('restaurant.manageMenu')}</span>
           </button>
           <button
             onClick={() => setView('guest-portal')}
@@ -729,7 +731,7 @@ export function RoomServiceModule({ filters }: RoomServiceModuleProps) {
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
           >
-            Guest Portal
+            {t('roomService.guestPortal')}
           </button>
           <button
             onClick={() => setView('kitchen-orders')}
@@ -739,7 +741,7 @@ export function RoomServiceModule({ filters }: RoomServiceModuleProps) {
                 : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
             }`}
           >
-            Kitchen Orders
+            {t('roomService.kitchenOrders')}
           </button>
           {cart.length > 0 && (
             <button
@@ -747,7 +749,7 @@ export function RoomServiceModule({ filters }: RoomServiceModuleProps) {
               className="relative flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
             >
               <ShoppingCart className="w-4 h-4" />
-              <span>Cart ({getCartItemCount()})</span>
+              <span>{t('roomService.cart')} ({getCartItemCount()})</span>
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                 {cart.length}
               </span>

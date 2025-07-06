@@ -190,7 +190,8 @@ html[dir="rtl"] .rtl-input-padding-right {
   .safe-area-bottom {
     padding-bottom: env(safe-area-inset-bottom);
   }
-  
+}
+
   /* RTL utilities */
   .rtl-space-x-reverse {
     --tw-space-x-reverse: 1;
@@ -203,7 +204,6 @@ html[dir="rtl"] .rtl-input-padding-right {
   .rtl-text-left {
     text-align: left;
   }
-}}
 
 /* Animation keyframes */
 @keyframes float {

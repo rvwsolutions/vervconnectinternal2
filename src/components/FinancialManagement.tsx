@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useFinancial } from '../context/FinancialContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { useAuth } from '../context/AuthContext';
@@ -27,6 +28,7 @@ import {
 } from 'lucide-react';
 
 export function FinancialManagement() {
+  const { t } = useTranslation();
   const { 
     invoices, 
     payments, 
@@ -565,8 +567,8 @@ export function FinancialManagement() {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Financial Management</h1>
-          <p className="text-gray-600 mt-2">Manage invoices, payments, and financial reporting</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('financial.financialManagement')}</h1>
+          <p className="text-gray-600 mt-2">{t('financial.manageFinancials')}</p>
         </div>
         <div className="flex space-x-4">
           <button
@@ -574,21 +576,21 @@ export function FinancialManagement() {
             className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
           >
             <CreditCard className="w-4 h-4" />
-            <span>Record Payment</span>
+            <span>{t('financial.createInvoice')}</span>
           </button>
           <button
             onClick={() => setShowInvoiceForm(true)}
             className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
           >
             <Plus className="w-4 h-4" />
-            <span>New Invoice</span>
+            <span>{t('financial.processPayment')}</span>
           </button>
         </div>
       </div>
 
       {/* Tab Navigation */}
       <div className="mb-6">
-        <div className="border-b border-gray-200">
+            <span>{t('financial.generateReport')}</span>
           <nav className="-mb-px flex space-x-8">
             {[
               { id: 'overview', name: 'Overview', icon: BarChart3 },

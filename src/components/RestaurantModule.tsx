@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHotel } from '../context/HotelContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { MenuManagement } from './MenuManagement';
@@ -25,6 +26,7 @@ interface RestaurantModuleProps {
 }
 
 export function RestaurantModule({ filters }: RestaurantModuleProps) {
+  const { t } = useTranslation();
   const { 
     restaurantTables, 
     tableReservations, 
@@ -360,10 +362,10 @@ export function RestaurantModule({ filters }: RestaurantModuleProps) {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Restaurant Management</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('restaurant.restaurantManagement')}</h1>
           {tableFilter && (
             <div className="mt-2 flex items-center space-x-2">
-              <span className="text-sm text-gray-600">Showing:</span>
+              <span className="text-sm text-gray-600">{t('common.filter')}:</span>
               <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold capitalize">
                 {tableFilter} Tables
               </span>
@@ -371,7 +373,7 @@ export function RestaurantModule({ filters }: RestaurantModuleProps) {
                 onClick={() => setTableFilter('')}
                 className="text-indigo-600 hover:text-indigo-800 text-sm"
               >
-                Show All
+                {t('common.view')}
               </button>
             </div>
           )}
@@ -382,21 +384,21 @@ export function RestaurantModule({ filters }: RestaurantModuleProps) {
             className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
           >
             <Settings className="w-4 h-4" />
-            <span>Manage Menu</span>
+            <span>{t('restaurant.manageMenu')}</span>
           </button>
           <button
             onClick={() => setShowChargeForm(true)}
             className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
           >
             <Receipt className="w-4 h-4" />
-            <span>Post to Room</span>
+            <span>{t('restaurant.postToRoom')}</span>
           </button>
           <button
             onClick={() => setShowReservationForm(true)}
             className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
           >
             <Plus className="w-4 h-4" />
-            <span>New Reservation</span>
+            <span>{t('restaurant.newReservation')}</span>
           </button>
         </div>
       </div>

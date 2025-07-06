@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHotel } from '../context/HotelContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { useAuth } from '../context/AuthContext';
@@ -64,6 +65,7 @@ interface RoomsModuleProps {
 }
 
 export function RoomsModule({ filters }: RoomsModuleProps) {
+  const { t } = useTranslation();
   const { 
     rooms, 
     bookings, 
@@ -1631,7 +1633,7 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
                             {doc.verified ? 'Verified' : 'Unverified'}
                           </span>
                         </div>
-                        <div className="text-sm text-gray-600 space-y-1">
+                        <div className="text-xs text-gray-500">
                           <p>Type: {doc.type.replace('_', ' ')}</p>
                           {doc.expiryDate && <p>Expires: {doc.expiryDate}</p>}
                           <p>Uploaded: {new Date(doc.uploadedAt).toLocaleDateString()}</p>
@@ -2337,8 +2339,8 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Rooms & Bookings</h1>
-          <p className="text-gray-600 mt-2">Manage rooms, bookings, and guest check-ins</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('common.rooms')}</h1>
+          <p className="text-gray-600 mt-2">{t('rooms.manageRooms')}</p>
           {dateFilter && (
             <div className="mt-2 flex items-center space-x-2">
               <span className="text-sm text-gray-600">Showing:</span>
@@ -2369,14 +2371,14 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
             className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
           >
             <Plus className="w-4 h-4" />
-            <span>New Booking</span>
+            <span>{t('dashboard.newBooking')}</span>
           </button>
           <button
             onClick={() => setShowRoomManagement(true)}
             className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
           >
             <Settings className="w-4 h-4" />
-            <span>Manage Rooms</span>
+            <span>{t('rooms.roomManagement')}</span>
           </button>
         </div>
       </div>

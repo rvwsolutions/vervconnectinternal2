@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHotel } from '../context/HotelContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { CheckCircle, Clock, AlertCircle, Bed, User, Receipt, X } from 'lucide-react';
@@ -11,6 +12,7 @@ interface HousekeepingModuleProps {
 }
 
 export function HousekeepingModule({ filters }: HousekeepingModuleProps) {
+  const { t } = useTranslation();
   const { 
     rooms, 
     bookings, 
@@ -223,19 +225,19 @@ export function HousekeepingModule({ filters }: HousekeepingModuleProps) {
     <div className="p-6 max-w-6xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Housekeeping Dashboard</h1>
-          <p className="text-gray-600">Manage room cleaning assignments and status updates</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">{t('housekeeping.housekeepingDashboard')}</h1>
+          <p className="text-gray-600">{t('housekeeping.manageRoomCleaning')}</p>
           {filter === 'dirty' && (
             <div className="mt-2 flex items-center space-x-2">
-              <span className="text-sm text-gray-600">Showing:</span>
+              <span className="text-sm text-gray-600">{t('common.filter')}:</span>
               <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-semibold">
-                Dirty Rooms Only
+                {t('housekeeping.dirtyRooms')}
               </span>
               <button
                 onClick={() => setFilter('all')}
                 className="text-indigo-600 hover:text-indigo-800 text-sm"
               >
-                Show All
+                {t('common.view')}
               </button>
             </div>
           )}
@@ -245,7 +247,7 @@ export function HousekeepingModule({ filters }: HousekeepingModuleProps) {
           className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
         >
           <Receipt className="w-4 h-4" />
-          <span>Post Charge</span>
+          <span>{t('housekeeping.postCharge')}</span>
         </button>
       </div>
 

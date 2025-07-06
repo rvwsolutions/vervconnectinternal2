@@ -4,6 +4,7 @@ import { useHotel } from '../context/HotelContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { useAuth } from '../context/AuthContext';
 import { 
+  Bed, 
   Calendar, 
   CheckCircle, 
   X, 
@@ -21,7 +22,6 @@ import {
   Building, 
   Home, 
   Users,
-  Bed,
   User, 
   CreditCard, 
   ArrowRight, 

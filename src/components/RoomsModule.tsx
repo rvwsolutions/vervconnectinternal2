@@ -3,34 +3,33 @@ import { useTranslation } from 'react-i18next';
 import { useHotel } from '../context/HotelContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { useAuth } from '../context/AuthContext';
-import { Bed, Calendar, CheckCircle, X, Search, Filter, Plus, Edit, Trash2, Clock, AlertCircle, Eye, EyeOff, FileText, Settings, Building, Home, Users } from 'lucide-react';
-import { RoomManagement } from './RoomManagement';
-import { BillGenerator } from './BillGenerator';
 import { 
   Bed, 
   Calendar, 
-  Plus, 
-  Search, 
-  Filter, 
   CheckCircle, 
   X, 
-  User, 
-  CreditCard, 
-  Clock, 
-  ArrowRight, 
-  AlertCircle, 
-  FileText, 
-  Upload, 
+  Search, 
+  Filter, 
+  Plus, 
   Edit, 
   Trash2, 
+  Clock, 
+  AlertCircle, 
   Eye, 
   EyeOff, 
+  FileText, 
+  Settings, 
+  Building, 
+  Home, 
+  Users,
+  User, 
+  CreditCard, 
+  ArrowRight, 
+  Upload, 
   Star, 
   Mail, 
   Phone, 
   MapPin, 
-  Building, 
-  Home, 
   Maximize, 
   Coffee, 
   Wifi, 
@@ -49,10 +48,10 @@ import {
   UserPlus,
   ChevronDown,
   ChevronUp,
-  Info,
-  Settings,
-  Users
+  Info
 } from 'lucide-react';
+import { RoomManagement } from './RoomManagement';
+import { BillGenerator } from './BillGenerator';
 import { Room, Booking, Guest, RoomCharge } from '../types';
 
 interface RoomsModuleProps {
@@ -80,7 +79,6 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
   } = useHotel();
   const { formatCurrency, hotelSettings } = useCurrency();
   const { user } = useAuth();
-  const { generateInvoiceFromBooking } = useFinancial();
   
   const [view, setView] = useState<'rooms' | 'bookings'>('rooms');
   const [showRoomManagement, setShowRoomManagement] = useState(false);

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { useHotel } from '../context/HotelContext';
 import { useCurrency } from '../context/CurrencyContext';
@@ -10,6 +11,7 @@ interface DashboardProps {
 }
 
 export function Dashboard({ onModuleChange }: DashboardProps) {
+  const { t } = useTranslation();
   const { user, getEmployeesOnShift } = useAuth();
   const { rooms, bookings, banquetBookings, restaurantTables, roomServiceOrders, guests } = useHotel();
   const { formatCurrency, hotelSettings, convertAmount, getCurrencySymbol } = useCurrency();
@@ -143,9 +145,9 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
   const getGreeting = () => {
     const currentTime = getCurrentTime();
     const hour = parseInt(currentTime.split(':')[0]);
-    if (hour < 12) return 'Good morning';
-    if (hour < 18) return 'Good afternoon';
-    return 'Good evening';
+    if (hour < 12) return t('dashboard.goodMorning');
+    if (hour < 18) return t('dashboard.goodAfternoon');
+    return t('dashboard.goodEvening');
   };
 
   // Get VIP tier badge color
@@ -162,15 +164,15 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
   const getQuickActions = () => {
     const baseActions = [
       {
-        title: "New Booking", 
-        description: "Create a room reservation",
+        title: t('dashboard.newBooking'), 
+        description: t('dashboard.newBooking'),
         icon: Calendar,
         color: "blue",
         onClick: () => onModuleChange('rooms', { action: 'new-booking' })
       },
       {
-        title: "Check-in Guest", 
-        description: "Process guest arrival",
+        title: t('dashboard.checkInGuest'), 
+        description: t('dashboard.checkInGuest'),
         icon: CheckCircle,
         color: "green",
         onClick: () => onModuleChange('rooms', { view: 'bookings', action: 'check-in' })
@@ -180,15 +182,15 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
     if (user?.role === 'admin' || user?.role === 'manager') {
       baseActions.push(
         {
-          title: "Table Reservation", 
-          description: "Reserve restaurant table",
+          title: t('dashboard.tableReservation'), 
+          description: t('dashboard.tableReservation'),
           icon: UtensilsCrossed,
           color: "orange",
           onClick: () => onModuleChange('restaurant', { action: 'new-reservation' })
         },
         {
-          title: "Event Booking", 
-          description: "Schedule banquet event",
+          title: t('dashboard.eventBooking'), 
+          description: t('dashboard.eventBooking'),
           icon: Users,
           color: "purple",
           onClick: () => onModuleChange('banquet', { action: 'new-booking' })
@@ -204,11 +206,11 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
     switch (user?.role) {
       case 'housekeeping':
         return {
-          title: 'Housekeeping Dashboard',
-          subtitle: 'Your room cleaning assignments and status updates',
+          title: t('housekeeping.housekeepingDashboard'),
+          subtitle: t('housekeeping.manageRoomCleaning'),
           primaryStats: [
             {
-              title: 'Rooms to Clean',
+              title: t('housekeeping.roomsToClean'),
               value: stats.dirtyRooms,
               icon: AlertCircle,
               color: 'orange',
@@ -216,14 +218,14 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
               urgent: stats.dirtyRooms > 0
             },
             {
-              title: 'Clean Rooms',
+              title: t('dashboard.clean'),
               value: stats.cleanRooms,
               icon: CheckCircle,
               color: 'green',
               onClick: () => onModuleChange('rooms', { statusFilter: 'clean' })
             },
             {
-              title: 'Check-outs Today',
+              title: t('housekeeping.checkoutsToday'),
               value: stats.todayCheckOuts,
               icon: Clock,
               color: 'blue',
@@ -235,25 +237,25 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
       
       case 'restaurant':
         return {
-          title: 'Restaurant Dashboard',
-          subtitle: 'Restaurant operations and room service management',
+          title: t('restaurant.restaurantManagement'),
+          subtitle: t('restaurant.restaurantManagement'),
           primaryStats: [
             {
-              title: 'Available Tables',
+              title: t('dashboard.availableTables'),
               value: stats.availableTables,
               icon: UtensilsCrossed,
               color: 'green',
               onClick: () => onModuleChange('restaurant', { tableFilter: 'available' })
             },
             {
-              title: 'Occupied Tables',
+              title: t('dashboard.occupiedTables'),
               value: stats.occupiedTables,
               icon: Users,
               color: 'blue',
               onClick: () => onModuleChange('restaurant', { tableFilter: 'occupied' })
             },
             {
-              title: 'Pending Room Service',
+              title: t('dashboard.pendingRoomService'),
               value: stats.pendingRoomService,
               icon: Clock,
               color: 'orange',
@@ -265,13 +267,13 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
       
       case 'front-desk':
         return {
-          title: 'Front Desk',
-          subtitle: 'Guest services and reservation management',
+          title: t('dashboard.frontDesk'),
+          subtitle: t('dashboard.frontDeskSubtitle'),
           primaryStats: [
             {
-              title: 'Room Status',
+              title: t('rooms.roomStatus'),
               value: availableRooms,
-              subtitle: `${stats.cleanRooms} clean • ${stats.dirtyRooms} dirty • ${stats.maintenanceRooms} maintenance`,
+              subtitle: `${stats.cleanRooms} ${t('dashboard.clean')} • ${stats.dirtyRooms} ${t('dashboard.dirty')} • ${stats.maintenanceRooms} ${t('dashboard.maintenance')}`,
               icon: Home,
               color: 'green',
               onClick: () => onModuleChange('rooms'),
@@ -284,7 +286,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
               }
             },
             {
-              title: 'Check-ins Today',
+              title: t('dashboard.checkInsToday'),
               value: stats.todayCheckIns,
               icon: Clock,
               color: 'blue',
@@ -292,9 +294,9 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
               urgent: stats.todayCheckIns > 0
             },
             {
-              title: 'Occupancy Rate',
+              title: t('dashboard.occupancyRate'),
               value: `${occupancyRate}%`,
-              subtitle: `${stats.occupiedRooms}/${stats.totalRooms} occupied`,
+              subtitle: `${stats.occupiedRooms}/${stats.totalRooms} ${t('dashboard.occupied')}`,
               icon: TrendingUp,
               color: 'indigo',
               onClick: () => onModuleChange('rooms', { statusFilter: 'occupied' })
@@ -304,13 +306,13 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
       
       default:
         return {
-          title: 'Welcome to VervConnect',
-          subtitle: `Here's what's happening at ${branding.hotelName} today`,
+          title: t('common.welcome'),
+          subtitle: `${t('dashboard.subtitle')} ${branding.hotelName}`,
           primaryStats: [
             {
-              title: 'Room Status',
+              title: t('rooms.roomStatus'),
               value: availableRooms,
-              subtitle: `${stats.cleanRooms} clean • ${stats.dirtyRooms} dirty • ${stats.maintenanceRooms} maintenance • ${occupancyRate}% occupied`,
+              subtitle: `${stats.cleanRooms} ${t('dashboard.clean')} • ${stats.dirtyRooms} ${t('dashboard.dirty')} • ${stats.maintenanceRooms} ${t('dashboard.maintenance')} • ${occupancyRate}% ${t('dashboard.occupied')}`,
               icon: Home,
               color: 'green',
               onClick: () => onModuleChange('rooms'),
@@ -323,16 +325,16 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
               }
             },
             {
-              title: 'Today\'s Activity',
+              title: t('dashboard.todaysActivity'),
               value: stats.todayCheckIns + stats.todayCheckOuts,
-              subtitle: `${stats.todayCheckIns} arrivals • ${stats.todayCheckOuts} departures`,
+              subtitle: `${stats.todayCheckIns} ${t('dashboard.arrivals')} • ${stats.todayCheckOuts} ${t('dashboard.departures')}`,
               icon: Clock,
               color: 'blue',
               onClick: () => onModuleChange('rooms', { view: 'bookings', dateFilter: 'today' }),
               urgent: (stats.todayCheckIns + stats.todayCheckOuts) > 0
             },
             {
-              title: 'Revenue Today',
+              title: t('dashboard.revenueToday'),
               value: `${getCurrencySymbol(hotelSettings.displayCurrency)} ${stats.todayRevenue.toLocaleString(undefined, {
                 minimumFractionDigits: hotelSettings.decimalPlaces,
                 maximumFractionDigits: hotelSettings.decimalPlaces
@@ -343,9 +345,9 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
               onClick: () => onModuleChange('rooms', { view: 'bookings', revenueFilter: 'today' })
             },
             {
-              title: 'Staff on Duty',
+              title: t('dashboard.staffOnDuty'),
               value: Object.values(employeesOnShift).flat().length,
-              subtitle: `across ${Object.keys(employeesOnShift).length} departments`,
+              subtitle: `${t('dashboard.across')} ${Object.keys(employeesOnShift).length} ${t('dashboard.departments')}`,
               icon: Users,
               color: 'purple',
               onClick: () => onModuleChange('admin')
@@ -474,7 +476,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
         className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
       >
         <Plus className="w-4 h-4" />
-        <span>Quick Actions</span>
+        <span>{t('dashboard.quickActions')}</span>
         <ChevronDown className={`w-4 h-4 transition-transform ${showQuickActions ? 'rotate-180' : ''}`} />
       </button>
 
@@ -489,7 +491,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
           {/* Dropdown Menu */}
           <div className="absolute right-0 mt-2 w-80 bg-white rounded-xl shadow-lg border border-gray-200 z-20">
             <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('dashboard.quickActions')}</h3>
               <div className="grid grid-cols-1 gap-3">
                 {quickActions.map((action, index) => {
                   const Icon = action.icon;
@@ -526,18 +528,18 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
-              {getGreeting()}, {user?.name}!
+              {getGreeting()}, {user?.name}
             </h1>
             <p className="text-gray-600 mt-2">{roleContent.subtitle}</p>
             <div className="mt-2 text-sm text-gray-500">
-              Current time: {formatTime(getCurrentTime())} • {formatDateTime(new Date())}
+              {t('dashboard.currentTime')}: {formatTime(getCurrentTime())} • {formatDateTime(new Date())}
             </div>
             
             {/* VervConnect Tagline */}
             <div className="mt-3 flex items-center space-x-2">
               <div className="h-1 w-8 lg:w-12 bg-gradient-to-r from-orange-400 via-pink-500 to-purple-600 rounded-full"></div>
               <span className="text-sm font-medium bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 bg-clip-text text-transparent">
-                Connect with Comfort
+                {t('common.tagline')}
               </span>
               <div className="h-1 w-8 lg:w-12 bg-gradient-to-r from-teal-400 via-blue-500 to-green-500 rounded-full"></div>
             </div>
@@ -800,8 +802,8 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
       {/* Today's Activity - Relevant to all roles */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 lg:p-6">
         <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-          <Calendar className="w-5 h-5 mr-2 text-indigo-600" />
-          Today's Activity
+          <Calendar className="w-5 h-5 mr-2 text-indigo-600" dir="ltr" />
+          {t('dashboard.todaysActivity')}
         </h3>
         <div className="space-y-3">
           {user?.role === 'housekeeping' ? (
@@ -931,7 +933,7 @@ export function Dashboard({ onModuleChange }: DashboardProps) {
              stats.pendingRoomService === 0 && stats.dirtyRooms === 0)) && (
             <div className="text-center py-8">
               <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-3" />
-              <p className="text-gray-500">All caught up! No urgent tasks for today.</p>
+              <p className="text-gray-500">{t('dashboard.allCaughtUp')}</p>
             </div>
           )}
         </div>

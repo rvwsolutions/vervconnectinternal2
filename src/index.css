@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* RTL Support */
+html[dir="rtl"] {
+  font-family: 'Noto Sans Arabic', sans-serif;
+}
+
+html[dir="ltr"] {
+  font-family: 'Noto Sans', sans-serif;
+}
+
 /* Light and bright background */
 body {
   background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 25%, #f8fafc 50%, #f1f5f9 75%, #e2e8f0 100%);
@@ -49,6 +58,36 @@ body {
   input, textarea, select {
     font-size: 16px; /* Prevents zoom on iOS */
   }
+}
+
+/* RTL specific styles */
+html[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+html[dir="rtl"] .rtl-mirror {
+  transform: rotateY(180deg);
+}
+
+/* Fix for RTL input fields with icons */
+html[dir="rtl"] .rtl-input-icon-left {
+  right: 3px;
+  left: auto;
+}
+
+html[dir="rtl"] .rtl-input-icon-right {
+  left: 3px;
+  right: auto;
+}
+
+html[dir="rtl"] .rtl-input-padding-left {
+  padding-right: 2.5rem;
+  padding-left: 1rem;
+}
+
+html[dir="rtl"] .rtl-input-padding-right {
+  padding-left: 2.5rem;
+  padding-right: 1rem;
 }
 
 /* Bright and welcoming utilities */
@@ -116,7 +155,7 @@ body {
   .bright-sky-gradient {
     background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 25%, #f8fafc 50%, #e0f2fe 75%, #f1f5f9 100%);
   }
-  
+
   /* Mobile-specific responsive utilities */
   .mobile-padding {
     @apply px-4 lg:px-6;
@@ -150,6 +189,19 @@ body {
   
   .safe-area-bottom {
     padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* RTL utilities */
+  .rtl-space-x-reverse {
+    --tw-space-x-reverse: 1;
+  }
+  
+  .rtl-text-right {
+    text-align: right;
+  }
+  
+  .rtl-text-left {
+    text-align: left;
   }
 }
 
@@ -200,7 +252,11 @@ body {
   button:focus,
   input:focus,
   textarea:focus,
-  select:focus {
+  select:focus,
+  [dir="rtl"] button:focus,
+  [dir="rtl"] input:focus,
+  [dir="rtl"] textarea:focus,
+  [dir="rtl"] select:focus {
     outline: 2px solid theme('colors.blue.500');
     outline-offset: 2px;
   }
@@ -212,4 +268,3 @@ body {
     background: rgba(255, 255, 255, 0.95);
     border: 1px solid rgba(229, 231, 235, 0.3);
   }
-}

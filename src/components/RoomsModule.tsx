@@ -6,8 +6,6 @@ import { useAuth } from '../context/AuthContext';
 import { useFinancial } from '../context/FinancialContext';
 import { RoomManagement } from './RoomManagement';
 import { BillGenerator } from './BillGenerator';
-import { GroupBookingModule } from './GroupBookingModule';
-import { GroupBookingForm } from './GroupBookingForm';
 import { 
   Bed, 
   Calendar, 
@@ -52,7 +50,8 @@ import {
   ChevronDown,
   ChevronUp,
   Info,
-  Settings
+  Settings,
+  Users
 } from 'lucide-react';
 import { Room, Booking, Guest, RoomCharge } from '../types';
 
@@ -86,8 +85,6 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
   const [view, setView] = useState<'rooms' | 'bookings'>('rooms');
   const [showRoomManagement, setShowRoomManagement] = useState(false);
   const [showBookingForm, setShowBookingForm] = useState(false);
-  const [showGroupBookingForm, setShowGroupBookingForm] = useState(false);
-  const [showGroupBookingModule, setShowGroupBookingModule] = useState(false);
   const [showCheckInForm, setShowCheckInForm] = useState(false);
   const [showGuestForm, setShowGuestForm] = useState(false);
   const [showBillGenerator, setShowBillGenerator] = useState(false);
@@ -2343,11 +2340,11 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">{t('rooms.roomsAndBookings')}</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{t('common.rooms')}</h1>
           <p className="text-gray-600 mt-2">{t('rooms.manageRooms')}</p>
           {dateFilter && (
             <div className="mt-2 flex items-center space-x-2">
-              <span className="text-sm text-gray-600">{t('common.filter')}:</span>
+              <span className="text-sm text-gray-600">Showing:</span>
               <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-semibold">
                 {dateFilter === 'check-in-today' ? 'Check-ins Today' : 
                  dateFilter === 'check-out-today' ? 'Check-outs Today' : 
@@ -2357,7 +2354,7 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
                 onClick={() => setDateFilter('')}
                 className="text-indigo-600 hover:text-indigo-800 text-sm"
               >
-                {t('common.view')}
+                Show All
               </button>
             </div>
           )}
@@ -2375,30 +2372,14 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
             className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
           >
             <Plus className="w-4 h-4" />
-            <span>{t('rooms.newBooking')}</span>
-          </button>
-          <button
-            onClick={() => {
-              setShowGroupBookingForm(true);
-            }}
-            className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-          >
-            <Users className="w-4 h-4" />
-            <span>{t('groupBooking.newGroupBooking')}</span>
+            <span>{t('dashboard.newBooking')}</span>
           </button>
           <button
             onClick={() => setShowRoomManagement(true)}
             className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
           >
             <Settings className="w-4 h-4" />
-            <span>{t('rooms.manageRooms')}</span>
-          </button>
-          <button
-            onClick={() => setShowGroupBookingModule(true)}
-            className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
-          >
-            <Users className="w-4 h-4" />
-            <span>{t('groupBooking.groupBookings')}</span>
+            <span>{t('rooms.roomManagement')}</span>
           </button>
         </div>
       </div>
@@ -2415,7 +2396,7 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
               }`}
             >
               <Bed className="w-5 h-5" />
-              <span>{t('common.rooms')}</span>
+              <span>Rooms</span>
             </button>
             <button
               onClick={() => setView('bookings')}
@@ -2426,13 +2407,7 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
               }`}
             >
               <Calendar className="w-5 h-5" />
-              <span>{t('common.bookings')}</span>
-            </button>
-            <button
-              onClick={() => setShowGroupBookingModule(true)}
-              className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300`}
-            >
-              <span>{t('groupBooking.groupBookings')}</span>
+              <span>Bookings</span>
             </button>
           </nav>
         </div>
@@ -2906,8 +2881,6 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
       {showRoomManagement && <RoomManagement onClose={() => setShowRoomManagement(false)} />}
       {showBookingForm && <BookingForm />}
       {showCheckInForm && <CheckInForm />}
-      {showGroupBookingForm && <GroupBookingForm onClose={() => setShowGroupBookingForm(false)} />}
-      {showGroupBookingModule && <GroupBookingModule onClose={() => setShowGroupBookingModule(false)} />}
       {showGuestForm && <GuestForm />}
       {showGuestDetails && <GuestDetails />}
       {showRoomDetails && <RoomDetails />}

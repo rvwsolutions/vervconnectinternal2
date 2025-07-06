@@ -51,7 +51,7 @@ import {
   Info
 } from 'lucide-react';
 import { RoomManagement } from './RoomManagement';
-import { GroupBookingModule } from './GroupBookingModule';
+import { GroupBookingManagement } from './GroupBookingManagement';
 import { BillGenerator } from './BillGenerator';
 import { Room, Booking, Guest, RoomCharge } from '../types';
 
@@ -76,17 +76,17 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
     updateBookingStatus, 
     addRoomCharge, 
     addGuest, 
-    updateGuest,
-    groupBookings
+    updateGuest 
   } = useHotel();
   const { formatCurrency, hotelSettings } = useCurrency();
   const { user } = useAuth();
   
-  const [view, setView] = useState<'rooms' | 'bookings' | 'group-bookings'>('rooms');
+  const [view, setView] = useState<'rooms' | 'bookings'>('rooms');
   const [showRoomManagement, setShowRoomManagement] = useState(false);
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [showCheckInForm, setShowCheckInForm] = useState(false);
   const [showGuestForm, setShowGuestForm] = useState(false);
+  const [showGroupBookingManagement, setShowGroupBookingManagement] = useState(false);
   const [showBillGenerator, setShowBillGenerator] = useState(false);
   const [showChargeForm, setShowChargeForm] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
@@ -2368,6 +2368,13 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
             <span>New Guest</span>
           </button>
           <button
+            onClick={() => setShowGroupBookingManagement(true)}
+            className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+          >
+            <Users className="w-4 h-4" />
+            <span>Group Bookings</span>
+          </button>
+          <button
             onClick={() => setShowBookingForm(true)}
             className="flex items-center space-x-2 px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
           >
@@ -2387,27 +2394,28 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
       <div className="mb-6">
         <div className="border-b border-gray-200">
           <nav className="-mb-px flex space-x-8">
-            {[
-              { id: 'rooms', name: t('common.rooms'), icon: Bed },
-              { id: 'bookings', name: t('common.bookings'), icon: Calendar },
-              { id: 'group-bookings', name: t('groupBooking.groupBookings'), icon: Users }
-            ].map((tab) => {
-              const Icon = tab.icon;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setView(tab.id as any)}
-                  className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm ${
-                    view === tab.id
-                      ? 'border-indigo-500 text-indigo-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  <Icon className="w-5 h-5" />
-                  <span>{tab.name}</span>
-                </button>
-              );
-            })}
+            <button
+              onClick={() => setView('rooms')}
+              className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm ${
+                view === 'rooms'
+                  ? 'border-indigo-500 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <Bed className="w-5 h-5" />
+              <span>Rooms</span>
+            </button>
+            <button
+              onClick={() => setView('bookings')}
+              className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm ${
+                view === 'bookings'
+                  ? 'border-indigo-500 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <Calendar className="w-5 h-5" />
+              <span>Bookings</span>
+            </button>
           </nav>
         </div>
       </div>
@@ -2877,14 +2885,10 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
         </div>
       )}
 
-      {/* Group Bookings View */}
-      {view === 'group-bookings' && (
-        <GroupBookingModule />
-      )}
-
       {showRoomManagement && <RoomManagement onClose={() => setShowRoomManagement(false)} />}
       {showBookingForm && <BookingForm />}
       {showCheckInForm && <CheckInForm />}
+      {showGroupBookingManagement && <GroupBookingManagement onClose={() => setShowGroupBookingManagement(false)} />}
       {showGuestForm && <GuestForm />}
       {showGuestDetails && <GuestDetails />}
       {showRoomDetails && <RoomDetails />}

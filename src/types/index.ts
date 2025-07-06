@@ -838,3 +838,29 @@ export interface Waitlist {
   flexibleDates: boolean;
   alternativeDates?: Array<{checkIn: string; checkOut: string}>;
 }
+// Group Booking Management
+export interface GroupBooking {
+  id: string;
+  groupName: string;
+  contactPerson: string;
+  contactEmail: string;
+  contactPhone: string;
+  totalRooms: number;
+  checkIn: string;
+  checkOut: string;
+  status: 'inquiry' | 'quoted' | 'confirmed' | 'cancelled';
+  specialRates?: number;
+  blockCode?: string;
+  roomsBlocked: string[];
+  roomsBooked: string[];
+  contractTerms?: string;
+  paymentTerms?: string;
+  cancellationPolicy?: string;
+  amenitiesIncluded?: string[];
+  meetingRoomsRequired?: boolean;
+  cateringRequired?: boolean;
+  transportationRequired?: boolean;
+  notes?: string;
+  createdAt: string;
+  modifiedAt?: string;
+}

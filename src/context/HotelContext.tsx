@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { Room, Guest, Booking, BanquetHall, BanquetBooking, RestaurantTable, TableReservation, RoomCharge, RoomServiceOrder, BanquetAmenity } from '../types';
+import { Room, Guest, Booking, BanquetHall, BanquetBooking, RestaurantTable, TableReservation, RoomCharge, RoomServiceOrder, BanquetAmenity, GroupBooking } from '../types';
 
 interface HotelContextType {
   // Rooms
@@ -50,6 +50,14 @@ interface HotelContextType {
   roomServiceOrders: RoomServiceOrder[];
   addRoomServiceOrder: (order: Omit<RoomServiceOrder, 'id'>) => void;
   updateRoomServiceOrderStatus: (orderId: string, status: RoomServiceOrder['status']) => void;
+  
+  // Group Bookings
+  groupBookings: GroupBooking[];
+  addGroupBooking: (groupBooking: Omit<GroupBooking, 'id' | 'bookingIds' | 'createdAt'>) => void;
+  updateGroupBooking: (groupBookingId: string, updates: Partial<GroupBooking>) => void;
+  deleteGroupBooking: (groupBookingId: string) => void;
+  addBookingToGroup: (groupBookingId: string, bookingId: string) => void;
+  removeBookingFromGroup: (groupBookingId: string, bookingId: string) => void;
 }
 
 const HotelContext = createContext<HotelContextType | undefined>(undefined);
@@ -801,6 +809,80 @@ const DEMO_TABLE_RESERVATIONS: TableReservation[] = [
   }
 ];
 
+// Demo Group Bookings
+const DEMO_GROUP_BOOKINGS: GroupBooking[] = [
+  {
+    id: '1',
+    bookingIds: [],
+    groupName: 'Johnson Wedding Party',
+    contactPerson: 'Robert Johnson',
+    contactEmail: 'robert@email.com',
+    contactPhone: '+1-555-0201',
+    totalRooms: 10,
+    checkIn: '2024-01-15',
+    checkOut: '2024-01-18',
+    status: 'confirmed',
+    specialRates: 180,
+    blockCode: 'JOHNSON24',
+    roomsBlocked: ['101', '102', '103', '201', '202', '203', '301', '302', '401'],
+    roomsBooked: ['101', '102', '103', '201'],
+    contractTerms: 'Standard group booking terms apply',
+    paymentTerms: '50% deposit required at booking, remainder due at check-in',
+    cancellationPolicy: 'Free cancellation up to 7 days before check-in',
+    amenitiesIncluded: ['Welcome Drinks', 'Airport Shuttle', 'Late Checkout'],
+    meetingRoomsRequired: true,
+    cateringRequired: true,
+    transportationRequired: true,
+    notes: 'Wedding party with special requirements for the ceremony',
+    createdAt: '2023-12-15T10:00:00Z',
+    createdBy: '1',
+    modifiedAt: '2023-12-20T14:30:00Z',
+    modifiedBy: '1',
+    totalAmount: 7200,
+    currency: 'USD',
+    paymentStatus: 'partial',
+    depositAmount: 3600,
+    depositPaid: true,
+    depositDate: '2023-12-16T09:15:00Z'
+  },
+  {
+    id: '2',
+    bookingIds: [],
+    groupName: 'Tech Conference 2024',
+    contactPerson: 'Sarah Williams',
+    contactEmail: 'sarah.williams@techcorp.com',
+    contactPhone: '+1-555-0202',
+    totalRooms: 25,
+    checkIn: '2024-02-10',
+    checkOut: '2024-02-15',
+    status: 'confirmed',
+    specialRates: 200,
+    blockCode: 'TECHCONF24',
+    roomsBlocked: ['101', '102', '103', '201', '202', '203', '301', '302', '401'],
+    roomsBooked: ['101', '102', '103', '201', '202', '203', '301', '302'],
+    contractTerms: 'Corporate rate includes breakfast and Wi-Fi',
+    paymentTerms: 'Invoice to be paid within 30 days',
+    cancellationPolicy: 'Free cancellation up to 14 days before check-in',
+    amenitiesIncluded: ['Welcome Package', 'Business Center Access', 'Meeting Room'],
+    meetingRoomsRequired: true,
+    cateringRequired: true,
+    transportationRequired: false,
+    notes: 'Annual tech conference with special requirements for presentation equipment',
+    createdAt: '2023-11-20T11:30:00Z',
+    createdBy: '1',
+    modifiedAt: '2023-12-05T16:45:00Z',
+    modifiedBy: '1',
+    totalAmount: 25000,
+    currency: 'USD',
+    paymentStatus: 'paid',
+    depositAmount: 12500,
+    depositPaid: true,
+    depositDate: '2023-11-25T14:20:00Z',
+    invoiceGenerated: true,
+    invoiceId: 'INV-2023-010'
+  }
+];
+
 export function HotelProvider({ children }: { children: ReactNode }) {
   const [rooms, setRooms] = useState<Room[]>(DEMO_ROOMS);
   const [guests, setGuests] = useState<Guest[]>(DEMO_GUESTS);
@@ -811,6 +893,7 @@ export function HotelProvider({ children }: { children: ReactNode }) {
   const [restaurantTables, setRestaurantTables] = useState<RestaurantTable[]>(DEMO_RESTAURANT_TABLES);
   const [tableReservations, setTableReservations] = useState<TableReservation[]>(DEMO_TABLE_RESERVATIONS);
   const [roomServiceOrders, setRoomServiceOrders] = useState<RoomServiceOrder[]>([]);
+  const [groupBookings, setGroupBookings] = useState<GroupBooking[]>(DEMO_GROUP_BOOKINGS);
 
   const updateRoomStatus = (roomId: string, status: Room['status']) => {
     setRooms(prev => prev.map(room => 
@@ -1003,6 +1086,98 @@ export function HotelProvider({ children }: { children: ReactNode }) {
     ));
   };
 
+  // Group Booking Functions
+  const addGroupBooking = (groupBookingData: Omit<GroupBooking, 'id' | 'bookingIds' | 'createdAt'>) => {
+    const newGroupBooking: GroupBooking = {
+      ...groupBookingData,
+      id: Date.now().toString(),
+      bookingIds: [],
+      createdAt: new Date().toISOString(),
+      createdBy: groupBookingData.createdBy || 'system'
+    };
+    setGroupBookings(prev => [...prev, newGroupBooking]);
+    return newGroupBooking.id;
+  };
+
+  const updateGroupBooking = (groupBookingId: string, updates: Partial<GroupBooking>) => {
+    setGroupBookings(prev => prev.map(booking => 
+      booking.id === groupBookingId 
+        ? { 
+            ...booking, 
+            ...updates,
+            modifiedAt: new Date().toISOString()
+          } 
+        : booking
+    ));
+  };
+
+  const deleteGroupBooking = (groupBookingId: string) => {
+    // First, update any bookings that are part of this group
+    const groupBooking = groupBookings.find(gb => gb.id === groupBookingId);
+    if (groupBooking && groupBooking.bookingIds.length > 0) {
+      setBookings(prev => prev.map(booking => 
+        groupBooking.bookingIds.includes(booking.id)
+          ? { ...booking, groupBookingId: undefined, isGroupBooking: false }
+          : booking
+      ));
+    }
+    
+    // Then delete the group booking
+    setGroupBookings(prev => prev.filter(booking => booking.id !== groupBookingId));
+  };
+
+  const addBookingToGroup = (groupBookingId: string, bookingId: string) => {
+    // Update the group booking
+    setGroupBookings(prev => prev.map(groupBooking => {
+      if (groupBooking.id === groupBookingId) {
+        return {
+          ...groupBooking,
+          bookingIds: [...groupBooking.bookingIds, bookingId],
+          modifiedAt: new Date().toISOString()
+        };
+      }
+      return groupBooking;
+    }));
+    
+    // Update the individual booking
+    setBookings(prev => prev.map(booking => {
+      if (booking.id === bookingId) {
+        return {
+          ...booking,
+          groupBookingId,
+          isGroupBooking: true
+        };
+      }
+      return booking;
+    }));
+  };
+
+  const removeBookingFromGroup = (groupBookingId: string, bookingId: string) => {
+    // Update the group booking
+    setGroupBookings(prev => prev.map(groupBooking => {
+      if (groupBooking.id === groupBookingId) {
+        return {
+          ...groupBooking,
+          bookingIds: groupBooking.bookingIds.filter(id => id !== bookingId),
+          modifiedAt: new Date().toISOString()
+        };
+      }
+      return groupBooking;
+    }));
+    
+    // Update the individual booking
+    setBookings(prev => prev.map(booking => {
+      if (booking.id === bookingId) {
+        return {
+          ...booking,
+          groupBookingId: undefined,
+          isGroupBooking: false
+        };
+      }
+      return booking;
+    }));
+  };
+
   return (
     <HotelContext.Provider value={{
       rooms,
@@ -1039,7 +1214,13 @@ export function HotelProvider({ children }: { children: ReactNode }) {
       deleteRestaurantTable,
       roomServiceOrders,
       addRoomServiceOrder,
-      updateRoomServiceOrderStatus
+      updateRoomServiceOrderStatus,
+      groupBookings,
+      addGroupBooking,
+      updateGroupBooking,
+      deleteGroupBooking,
+      addBookingToGroup,
+      removeBookingFromGroup
     }}>
       {children}
     </HotelContext.Provider>

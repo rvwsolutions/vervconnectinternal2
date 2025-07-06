@@ -198,6 +198,7 @@ export interface Guest {
 export interface Booking {
   id: string;
   guestId: string;
+  groupBookingId?: string; // Reference to group booking if part of a group
   roomId: string;
   checkIn: string;
   checkOut: string;
@@ -229,6 +230,7 @@ export interface Booking {
   isVipBooking?: boolean; // Indicates if this is a VIP booking
   vipServices?: string[]; // VIP services included in booking
   vipUpgrades?: string[]; // Complimentary upgrades provided
+  isGroupBooking?: boolean; // Indicates if this is part of a group booking
   priorityCheckin?: boolean; // Skip regular check-in queue
   personalizedWelcome?: string; // Custom welcome message/setup
 }
@@ -742,6 +744,7 @@ export interface ComplianceFinding {
 // Advanced Booking Types
 export interface GroupBooking {
   id: string;
+  bookingIds: string[]; // References to individual bookings in this group
   groupName: string;
   contactPerson: string;
   contactEmail: string;
@@ -763,7 +766,17 @@ export interface GroupBooking {
   transportationRequired?: boolean;
   notes?: string;
   createdAt: string;
+  createdBy: string;
   modifiedAt?: string;
+  modifiedBy?: string;
+  totalAmount?: number;
+  currency?: string;
+  paymentStatus?: 'pending' | 'partial' | 'paid' | 'refunded';
+  depositAmount?: number;
+  depositPaid?: boolean;
+  depositDate?: string;
+  invoiceGenerated?: boolean;
+  invoiceId?: string;
 }
 
 export interface PackageDeal {

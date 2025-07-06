@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useHotel } from '../context/HotelContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { useAuth } from '../context/AuthContext';
-import { useFinancial } from '../context/FinancialContext';
+import { Bed, Calendar, CheckCircle, X, Search, Filter, Plus, Edit, Trash2, Clock, AlertCircle, Eye, EyeOff, FileText, Settings, Building, Home, Users } from 'lucide-react';
 import { RoomManagement } from './RoomManagement';
 import { BillGenerator } from './BillGenerator';
 import { 

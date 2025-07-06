@@ -52,6 +52,7 @@ import {
 } from 'lucide-react';
 import { RoomManagement } from './RoomManagement';
 import { BillGenerator } from './BillGenerator';
+import { GroupBookingModule } from './GroupBookingModule';
 import { Room, Booking, Guest, RoomCharge } from '../types';
 
 interface RoomsModuleProps {
@@ -80,7 +81,7 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
   const { formatCurrency, hotelSettings } = useCurrency();
   const { user } = useAuth();
   
-  const [view, setView] = useState<'rooms' | 'bookings'>('rooms');
+  const [view, setView] = useState<'rooms' | 'bookings' | 'group-bookings'>('rooms');
   const [showRoomManagement, setShowRoomManagement] = useState(false);
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [showCheckInForm, setShowCheckInForm] = useState(false);
@@ -2388,24 +2389,35 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
             <button
               onClick={() => setView('rooms')}
               className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm ${
-                view === 'rooms'
+                view === 'rooms' 
                   ? 'border-indigo-500 text-indigo-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
               <Bed className="w-5 h-5" />
-              <span>Rooms</span>
+              <span>{t('rooms.roomManagement')}</span>
             </button>
             <button
               onClick={() => setView('bookings')}
               className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm ${
-                view === 'bookings'
+                view === 'bookings' 
                   ? 'border-indigo-500 text-indigo-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
               <Calendar className="w-5 h-5" />
-              <span>Bookings</span>
+              <span>{t('common.rooms')}</span>
+            </button>
+            <button
+              onClick={() => setView('group-bookings')}
+              className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm ${
+                view === 'group-bookings' 
+                  ? 'border-indigo-500 text-indigo-600'
+                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              }`}
+            >
+              <Users className="w-5 h-5" />
+              <span>{t('groupBooking.groupBookings')}</span>
             </button>
           </nav>
         </div>
@@ -2462,162 +2474,11 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
       </div>
 
       {view === 'rooms' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredRooms.map((room) => {
-            const currentBooking = bookings.find(b => 
-              b.roomId === room.id && 
-              (b.status === 'confirmed' || b.status === 'checked-in')
-            );
-            
-            const guest = currentBooking ? guests.find(g => g.id === currentBooking.guestId) : null;
-            
-            return (
-              <div key={room.id} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
-                <div className="aspect-video bg-gray-200 relative">
-                  {room.photos.length > 0 ? (
-                    <img
-                      src={room.photos[0]}
-                      alt={`Room ${room.number}`}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center">
-                      <Bed className="w-12 h-12 text-gray-400" />
-                    </div>
-                  )}
-                  <div className="absolute top-4 right-4">
-                    <span className={`px-3 py-1 rounded-full text-xs font-semibold flex items-center space-x-1 ${getStatusColor(room.status)}`}>
-                      {getStatusIcon(room.status)}
-                      <span className="capitalize">{room.status.replace('-', ' ')}</span>
-                    </span>
-                  </div>
-                  {room.isVipRoom && (
-                    <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 flex items-center space-x-1">
-                        <Star className="w-3 h-3" />
-                        <span>VIP</span>
-                      </span>
-                    </div>
-                  )}
-                </div>
-                
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div>
-                      <h3 className="text-xl font-bold text-gray-900">Room {room.number}</h3>
-                      <p className="text-sm text-gray-600 capitalize">{room.type} room</p>
-                    </div>
-                    <span className="text-lg font-semibold text-green-600">{formatCurrency(room.rate)}</span>
-                  </div>
-                  
-                  {currentBooking && guest ? (
-                    <div className="mb-4 p-3 bg-blue-50 rounded-lg">
-                      <div className="flex items-center space-x-2 mb-1">
-                        <User className="w-4 h-4 text-blue-500" />
-                        <span className="font-medium text-blue-900">{guest.name}</span>
-                      </div>
-                      <div className="flex items-center space-x-2 text-sm text-blue-700">
-                        <Calendar className="w-4 h-4" />
-                        <span>{currentBooking.checkIn} to {currentBooking.checkOut}</span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="mb-4 p-3 bg-green-50 rounded-lg">
-                      <div className="flex items-center space-x-2">
-                        <CheckCircle className="w-4 h-4 text-green-500" />
-                        <span className="font-medium text-green-900">Available for booking</span>
-                      </div>
-                    </div>
-                  )}
-                  
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {room.amenities.slice(0, 3).map((amenity) => (
-                      <span key={amenity} className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded">
-                        {amenity}
-                      </span>
-                    ))}
-                    {room.amenities.length > 3 && (
-                      <span className="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded">
-                        +{room.amenities.length - 3} more
-                      </span>
-                    )}
-                  </div>
-                  
-                  <div className="flex space-x-2">
-                    <button
-                      onClick={() => {
-                        setSelectedRoom(room);
-                        setShowRoomDetails(true);
-                      }}
-                      className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
-                    >
-                      <Eye className="w-4 h-4" />
-                      <span>View Details</span>
-                    </button>
-                    
-                    {room.status === 'clean' && !currentBooking && (
-                      <button
-                        onClick={() => {
-                          setSelectedRoom(room);
-                          setShowBookingForm(true);
-                        }}
-                        className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-                      >
-                        <Calendar className="w-4 h-4" />
-                        <span>Book</span>
-                      </button>
-                    )}
-                    
-                    {currentBooking && currentBooking.status === 'confirmed' && (
-                      <button
-                        onClick={() => {
-                          setSelectedBooking(currentBooking);
-                          setShowCheckInForm(true);
-                        }}
-                        className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
-                      >
-                        <LogIn className="w-4 h-4" />
-                        <span>Check In</span>
-                      </button>
-                    )}
-                    
-                    {currentBooking && currentBooking.status === 'checked-in' &&  (
-                      <button
-                        onClick={() => {
-                          setSelectedBooking(currentBooking);
-                          setShowBillGenerator(true);
-                        }}
-                        className="flex-1 flex items-center justify-center space-x-2 px-3 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        <span>Check Out</span>
-                      </button>
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-
-          {filteredRooms.length === 0 && (
-            <div className="col-span-full flex flex-col items-center justify-center py-16 border-2 border-dashed border-gray-300 rounded-xl">
-              <Bed className="w-16 h-16 text-gray-400 mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No Rooms Found</h3>
-              <p className="text-gray-600 text-center mb-6">
-                {rooms.length === 0 
-                  ? "No rooms have been added yet" 
-                  : "No rooms match your current filters"}
-              </p>
-              <button
-                onClick={() => setShowRoomManagement(true)}
-                className="flex items-center space-x-2 px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
-              >
-                <Plus className="w-5 h-5" />
-                <span>Manage Rooms</span>
-              </button>
-            </div>
-          )}
-        </div>
+        <RoomManagement />
+      )}
+      
+      {view === 'group-bookings' && (
+        <GroupBookingModule />
       )}
 
       {view === 'bookings' && (

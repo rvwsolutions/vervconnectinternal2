@@ -68,7 +68,6 @@ interface RoomsModuleProps {
 
 export function RoomsModule({ filters }: RoomsModuleProps) {
   const { t } = useTranslation();
-  const { t } = useTranslation();
   const { 
     rooms, 
     bookings, 

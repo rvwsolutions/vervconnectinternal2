@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHotel } from '../context/HotelContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { useAuth } from '../context/AuthContext';
@@ -48,9 +49,11 @@ import {
   UserPlus,
   ChevronDown,
   ChevronUp,
-  Info
+  Star,
+  Users
 } from 'lucide-react';
 import { RoomManagement } from './RoomManagement';
+import { GroupBookingModule } from './GroupBookingModule';
 import { BillGenerator } from './BillGenerator';
 import { GroupBookingModule } from './GroupBookingModule';
 import { Room, Booking, Guest, RoomCharge } from '../types';
@@ -66,6 +69,7 @@ interface RoomsModuleProps {
 }
 
 export function RoomsModule({ filters }: RoomsModuleProps) {
+  const { t } = useTranslation();
   const { t } = useTranslation();
   const { 
     rooms, 
@@ -87,6 +91,7 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
   const [showCheckInForm, setShowCheckInForm] = useState(false);
   const [showGuestForm, setShowGuestForm] = useState(false);
   const [showBillGenerator, setShowBillGenerator] = useState(false);
+  const [showGroupBookings, setShowGroupBookings] = useState(false);
   const [showChargeForm, setShowChargeForm] = useState(false);
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
   const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
@@ -2339,8 +2344,8 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
     <div className="p-6 max-w-7xl mx-auto">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">{t('common.rooms')}</h1>
-          <p className="text-gray-600 mt-2">{t('rooms.manageRooms')}</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('rooms.roomsAndBookings')}</h1>
+          <p className="text-gray-600 mt-2">{t('rooms.manageRoomsAndBookings')}</p>
           {dateFilter && (
             <div className="mt-2 flex items-center space-x-2">
               <span className="text-sm text-gray-600">Showing:</span>
@@ -2359,6 +2364,13 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
           )}
         </div>
         <div className="flex space-x-4">
+          <button
+            onClick={() => setShowGroupBookings(true)}
+            className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+          >
+            <Users className="w-4 h-4" />
+            <span>{t('groupBooking.groupBookings')}</span>
+          </button>
           <button
             onClick={() => setShowGuestForm(true)}
             className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
@@ -2740,6 +2752,7 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
       {showRoomManagement && <RoomManagement onClose={() => setShowRoomManagement(false)} />}
       {showBookingForm && <BookingForm />}
       {showCheckInForm && <CheckInForm />}
+      {showGroupBookings && <GroupBookingModule onClose={() => setShowGroupBookings(false)} />}
       {showGuestForm && <GuestForm />}
       {showGuestDetails && <GuestDetails />}
       {showRoomDetails && <RoomDetails />}

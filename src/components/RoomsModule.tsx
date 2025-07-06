@@ -48,7 +48,6 @@ import {
   UserPlus,
   ChevronDown,
   ChevronUp,
-  Search,
   Users
 } from 'lucide-react';
 import { RoomManagement } from './RoomManagement';

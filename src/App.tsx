@@ -19,14 +19,12 @@ import { RoomServiceModule } from './components/RoomServiceModule';
 import { AdminModule } from './components/AdminModule';
 import { CommunicationHub } from './components/CommunicationHub';
 import { FinancialManagement } from './components/FinancialManagement';
-import { LanguageSettings } from './components/LanguageSettings';
 
 function AppContent() {
   const { t } = useTranslation();
   const { isAuthenticated, user } = useAuth();
   const [currentModule, setCurrentModule] = useState('dashboard');
   const [moduleFilters, setModuleFilters] = useState<any>({});
-  const [showLanguageSettings, setShowLanguageSettings] = useState(false);
 
   // Move useEffect before any conditional returns to ensure hooks are called in the same order
   React.useEffect(() => {
@@ -113,9 +111,6 @@ function AppContent() {
       <Layout currentModule={currentModule} onModuleChange={handleModuleChange}>
         {renderModule()}
       </Layout>
-      {showLanguageSettings && (
-        <LanguageSettings onClose={() => setShowLanguageSettings(false)} />
-      )}
     </div>
   );
 }

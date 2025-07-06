@@ -590,7 +590,7 @@ export function FinancialManagement() {
 
       {/* Tab Navigation */}
       <div className="mb-6">
-            <span>{t('financial.generateReport')}</span>
+        <div className="border-b border-gray-200">
           <nav className="-mb-px flex space-x-8">
             {[
               { id: 'overview', name: 'Overview', icon: BarChart3 },
@@ -623,7 +623,6 @@ export function FinancialManagement() {
             })}
           </nav>
         </div>
-      </div>
 
       {/* Overview Tab */}
       {activeTab === 'overview' && (

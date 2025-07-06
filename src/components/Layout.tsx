@@ -366,7 +366,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           </div>
         </header>
 
-        <main className="flex-1 overflow-auto bg-gradient-to-br from-blue-50 via-white to-indigo-50" dir={i18n.dir()}>
+        <main className="flex-1 overflow-auto bg-gradient-to-br from-blue-50 via-white to-indigo-50" dir={i18n?.dir()}>
           <div className="min-h-full">
             {children}
           </div>

@@ -1059,6 +1059,7 @@ export function BanquetModule({ filters }: BanquetModuleProps) {
         <div>
           <h1 className="text-3xl font-bold text-gray-900">{t('common.banquet')}</h1>
           <p className="text-gray-600 mt-2">{t('banquet.manageHalls')}</p>
+          {dateFilter === 'today' && (
             <div className="mt-2 flex items-center space-x-2">
               <span className="text-sm text-gray-600">Showing:</span>
               <span className="px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-semibold">

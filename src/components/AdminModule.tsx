@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { useBranding } from '../context/BrandingContext';
 import { BrandingSettings } from './BrandingSettings';
@@ -28,6 +29,7 @@ import {
 } from 'lucide-react';
 
 export function AdminModule() {
+  const { t } = useTranslation();
   const { users, addUser, updateUser, toggleUserStatus } = useAuth();
   const { branding } = useBranding();
   
@@ -130,9 +132,9 @@ export function AdminModule() {
   return (
     <div className="flex h-full">
       {/* Admin Sidebar */}
-      <div className="w-64 bg-white border-r border-gray-200 h-full overflow-y-auto">
+      <div className="hidden md:block w-64 bg-white border-r border-gray-200 h-full overflow-y-auto">
         <div className="p-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-6">Administration</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-6">{t('common.admin')}</h2>
           <nav className="space-y-1">
             <button
               onClick={() => setActiveSection('users')}
@@ -143,7 +145,7 @@ export function AdminModule() {
               }`}
             >
               <Users className="w-5 h-5 flex-shrink-0" />
-              <span>User Management</span>
+              <span>{t('admin.userManagement')}</span>
             </button>
             
             <button
@@ -155,7 +157,7 @@ export function AdminModule() {
               }`}
             >
               <Building className="w-5 h-5 flex-shrink-0" />
-              <span>Hotel Branding</span>
+              <span>{t('admin.hotelBranding')}</span>
             </button>
             
             <button
@@ -167,7 +169,7 @@ export function AdminModule() {
               }`}
             >
               <Clock className="w-5 h-5 flex-shrink-0" />
-              <span>Shift Management</span>
+              <span>{t('admin.shiftManagement')}</span>
             </button>
             
             <button
@@ -179,7 +181,7 @@ export function AdminModule() {
               }`}
             >
               <Bed className="w-5 h-5 flex-shrink-0" />
-              <span>Room Management</span>
+              <span>{t('admin.roomManagement')}</span>
             </button>
             
             <button
@@ -191,7 +193,7 @@ export function AdminModule() {
               }`}
             >
               <UtensilsCrossed className="w-5 h-5 flex-shrink-0" />
-              <span>Table Management</span>
+              <span>{t('admin.tableManagement')}</span>
             </button>
             
             <button
@@ -203,7 +205,7 @@ export function AdminModule() {
               }`}
             >
               <Shield className="w-5 h-5 flex-shrink-0" />
-              <span>Security Settings</span>
+              <span>{t('admin.securitySettings')}</span>
             </button>
             
             <button
@@ -215,7 +217,7 @@ export function AdminModule() {
               }`}
             >
               <Settings className="w-5 h-5 flex-shrink-0" />
-              <span>System Settings</span>
+              <span>{t('admin.systemSettings')}</span>
             </button>
             
             <button
@@ -227,7 +229,7 @@ export function AdminModule() {
               }`}
             >
               <BarChart3 className="w-5 h-5 flex-shrink-0" />
-              <span>Reports & Analytics</span>
+              <span>{t('admin.reportsAnalytics')}</span>
             </button>
           </nav>
         </div>
@@ -235,6 +237,41 @@ export function AdminModule() {
 
       {/* Main Content */}
       <div className="flex-1 overflow-y-auto">
+        {/* Mobile Admin Navigation */}
+        <div className="md:hidden p-4 bg-white border-b border-gray-200">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-900">{t('common.admin')}</h2>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            {[
+              { id: 'users', name: t('admin.userManagement'), icon: Users },
+              { id: 'branding', name: t('admin.hotelBranding'), icon: Building },
+              { id: 'shifts', name: t('admin.shiftManagement'), icon: Clock },
+              { id: 'rooms', name: t('admin.roomManagement'), icon: Bed },
+              { id: 'tables', name: t('admin.tableManagement'), icon: UtensilsCrossed },
+              { id: 'security', name: t('admin.securitySettings'), icon: Shield },
+              { id: 'system', name: t('admin.systemSettings'), icon: Settings },
+              { id: 'reports', name: t('admin.reportsAnalytics'), icon: BarChart3 }
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => setActiveSection(item.id as any)}
+                  className={`flex flex-col items-center justify-center p-3 rounded-lg ${
+                    activeSection === item.id
+                      ? 'bg-indigo-50 text-indigo-700 border border-indigo-200'
+                      : 'bg-gray-50 text-gray-700 border border-gray-200'
+                  }`}
+                >
+                  <Icon className="w-5 h-5 mb-1" />
+                  <span className="text-xs text-center">{item.name}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        
         {renderSection()}
       </div>
     </div>

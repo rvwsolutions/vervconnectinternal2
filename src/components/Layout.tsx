@@ -323,7 +323,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
       <Sidebar />
       {sidebarOpen && <Sidebar mobile />}
 
-      <div className="flex-1 flex flex-col overflow-hidden">
+      <div className="flex-1 flex flex-col overflow-hidden" dir={i18n.dir()}>
         <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-blue-100 lg:hidden">
           <div className="flex items-center justify-between h-14 px-4">
             <div className="flex items-center space-x-2">
@@ -366,7 +366,7 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           </div>
         </header>
 
-        <main className="flex-1 overflow-auto bg-gradient-to-br from-blue-50 via-white to-indigo-50" dir={i18n?.dir()}>
+        <main className="flex-1 overflow-auto bg-gradient-to-br from-blue-50 via-white to-indigo-50">
           <div className="min-h-full">
             {children}
           </div>

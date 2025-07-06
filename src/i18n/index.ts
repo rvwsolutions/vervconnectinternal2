@@ -27,11 +27,30 @@ i18n
     interpolation: {
       escapeValue: false // React already safes from XSS
     },
+    // Set RTL for Arabic language
+    },
+    react: {
+      useSuspense: false
     detection: {
       order: ['localStorage', 'navigator'],
       lookupLocalStorage: 'vervConnectLanguage',
       caches: ['localStorage']
     }
   });
+
+// Set document direction based on language
+const setDocumentDirection = (language: string) => {
+  const isRtl = language === 'ar';
+  document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+  document.documentElement.lang = language;
+};
+
+// Set initial direction
+setDocumentDirection(i18n.language);
+
+// Listen for language changes
+i18n.on('languageChanged', (lang) => {
+  setDocumentDirection(lang);
+});
 
 export default i18n;

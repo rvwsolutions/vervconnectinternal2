@@ -623,6 +623,7 @@ export function FinancialManagement() {
             })}
           </nav>
         </div>
+      </div>
 
       {/* Overview Tab */}
       {activeTab === 'overview' && (

@@ -14,7 +14,7 @@ interface LayoutProps {
 }
 
 export function Layout({ children, currentModule, onModuleChange }: LayoutProps) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { user, logout } = useAuth();
   const { unreadCount } = useCommunication();
   const { branding, formatTime, getCurrentTime } = useBranding();

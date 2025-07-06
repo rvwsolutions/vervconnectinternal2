@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { useCommunication } from '../context/CommunicationContext';
 import { useBranding } from '../context/BrandingContext';
 import { VervConnectLogo } from './VervConnectLogo';
-import { Hotel, Calendar, Bed, Users, UtensilsCrossed, BarChart3, LogOut, Menu, X, Settings, Shield, ZoomIn as Room, MessageSquare, DollarSign, Bell, Building, Home } from 'lucide-react';
+import { Hotel, Calendar, Bed, Users, UtensilsCrossed, BarChart3, LogOut, Menu, X, Settings, Shield, ZoomIn as Room, MessageSquare, DollarSign, Bell, Building, Home, Languages } from 'lucide-react';
+import { LanguageSettings } from './LanguageSettings';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -12,10 +14,12 @@ interface LayoutProps {
 }
 
 export function Layout({ children, currentModule, onModuleChange }: LayoutProps) {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
   const { unreadCount } = useCommunication();
   const { branding, formatTime, getCurrentTime } = useBranding();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showLanguageSettings, setShowLanguageSettings] = useState(false);
 
   // Close sidebar when module changes
   useEffect(() => {
@@ -50,55 +54,55 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
 
   const getModulesForRole = () => {
     const baseModules = [
-      { id: 'dashboard', name: 'Dashboard', icon: BarChart3 }
+      { id: 'dashboard', name: t('common.dashboard'), icon: BarChart3 }
     ];
 
     switch (user?.role) {
       case 'admin':
         return [
           ...baseModules,
-          { id: 'rooms', name: 'Rooms & Bookings', icon: Bed },
-          { id: 'housekeeping', name: 'Housekeeping', icon: Calendar },
-          { id: 'banquet', name: 'Banquet Halls', icon: Users },
-          { id: 'restaurant', name: 'Restaurant', icon: UtensilsCrossed },
-          { id: 'room-service', name: 'Room Service', icon: Room },
-          { id: 'communications', name: 'Communications', icon: MessageSquare, badge: unreadCount },
-          { id: 'financial', name: 'Financial', icon: DollarSign },
-          { id: 'admin', name: 'Administration', icon: Shield }
+          { id: 'rooms', name: t('common.rooms'), icon: Bed },
+          { id: 'housekeeping', name: t('common.housekeeping'), icon: Calendar },
+          { id: 'banquet', name: t('common.banquet'), icon: Users },
+          { id: 'restaurant', name: t('common.restaurant'), icon: UtensilsCrossed },
+          { id: 'room-service', name: t('common.roomService'), icon: Room },
+          { id: 'communications', name: t('common.communications'), icon: MessageSquare, badge: unreadCount },
+          { id: 'financial', name: t('common.financial'), icon: DollarSign },
+          { id: 'admin', name: t('common.admin'), icon: Shield }
         ];
       case 'manager':
         return [
           ...baseModules,
-          { id: 'rooms', name: 'Rooms & Bookings', icon: Bed },
-          { id: 'housekeeping', name: 'Housekeeping', icon: Calendar },
-          { id: 'banquet', name: 'Banquet Halls', icon: Users },
-          { id: 'restaurant', name: 'Restaurant', icon: UtensilsCrossed },
-          { id: 'room-service', name: 'Room Service', icon: Room },
-          { id: 'communications', name: 'Communications', icon: MessageSquare, badge: unreadCount },
-          { id: 'financial', name: 'Financial', icon: DollarSign }
+          { id: 'rooms', name: t('common.rooms'), icon: Bed },
+          { id: 'housekeeping', name: t('common.housekeeping'), icon: Calendar },
+          { id: 'banquet', name: t('common.banquet'), icon: Users },
+          { id: 'restaurant', name: t('common.restaurant'), icon: UtensilsCrossed },
+          { id: 'room-service', name: t('common.roomService'), icon: Room },
+          { id: 'communications', name: t('common.communications'), icon: MessageSquare, badge: unreadCount },
+          { id: 'financial', name: t('common.financial'), icon: DollarSign }
         ];
       case 'front-desk':
         return [
           ...baseModules,
-          { id: 'rooms', name: 'Rooms & Bookings', icon: Bed },
-          { id: 'banquet', name: 'Banquet Halls', icon: Users },
-          { id: 'restaurant', name: 'Restaurant', icon: UtensilsCrossed },
-          { id: 'room-service', name: 'Room Service', icon: Room },
-          { id: 'communications', name: 'Communications', icon: MessageSquare, badge: unreadCount }
+          { id: 'rooms', name: t('common.rooms'), icon: Bed },
+          { id: 'banquet', name: t('common.banquet'), icon: Users },
+          { id: 'restaurant', name: t('common.restaurant'), icon: UtensilsCrossed },
+          { id: 'room-service', name: t('common.roomService'), icon: Room },
+          { id: 'communications', name: t('common.communications'), icon: MessageSquare, badge: unreadCount }
         ];
       case 'housekeeping':
         return [
           ...baseModules,
-          { id: 'housekeeping', name: 'Housekeeping', icon: Calendar },
-          { id: 'rooms', name: 'Room Status', icon: Bed },
-          { id: 'communications', name: 'Communications', icon: MessageSquare, badge: unreadCount }
+          { id: 'housekeeping', name: t('common.housekeeping'), icon: Calendar },
+          { id: 'rooms', name: t('common.rooms'), icon: Bed },
+          { id: 'communications', name: t('common.communications'), icon: MessageSquare, badge: unreadCount }
         ];
       case 'restaurant':
         return [
           ...baseModules,
-          { id: 'restaurant', name: 'Restaurant', icon: UtensilsCrossed },
-          { id: 'room-service', name: 'Room Service', icon: Room },
-          { id: 'communications', name: 'Communications', icon: MessageSquare, badge: unreadCount }
+          { id: 'restaurant', name: t('common.restaurant'), icon: UtensilsCrossed },
+          { id: 'room-service', name: t('common.roomService'), icon: Room },
+          { id: 'communications', name: t('common.communications'), icon: MessageSquare, badge: unreadCount }
         ];
       default:
         return baseModules;
@@ -298,7 +302,16 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
             className="w-full flex items-center space-x-3 px-3 lg:px-4 py-2 lg:py-2 rounded-xl transition-all text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100 touch-manipulation" 
           >
             <LogOut className="w-5 h-5 flex-shrink-0" />
-            <span className="text-sm lg:text-base">Sign out</span>
+            <span className="text-sm lg:text-base">{t('common.signOut')}</span>
+          </button>
+          
+          {/* Language Switcher */}
+          <button
+            onClick={() => setShowLanguageSettings(true)}
+            className="w-full flex items-center space-x-3 px-3 lg:px-4 py-2 lg:py-2 mt-2 rounded-xl transition-all text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-800 active:bg-blue-100 touch-manipulation"
+          >
+            <Languages className="w-5 h-5 flex-shrink-0" />
+            <span className="text-sm lg:text-base">{t('settings.language')}</span>
           </button>
         </div>
       </div>
@@ -353,12 +366,16 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
           </div>
         </header>
 
-        <main className="flex-1 overflow-auto bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        <main className="flex-1 overflow-auto bg-gradient-to-br from-blue-50 via-white to-indigo-50" dir={i18n.dir()}>
           <div className="min-h-full">
             {children}
           </div>
         </main>
       </div>
+      
+      {showLanguageSettings && (
+        <LanguageSettings onClose={() => setShowLanguageSettings(false)} />
+      )}
     </div>
   );
 }

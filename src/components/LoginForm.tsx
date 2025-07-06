@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 import { useBranding } from '../context/BrandingContext';
 import { VervConnectLogo } from './VervConnectLogo';
 import { Lock, Mail, Shield } from 'lucide-react';
 
 export function LoginForm() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -69,18 +71,18 @@ export function LoginForm() {
               
               {/* Tagline with bright colors */}
               <div className="mb-4">
-                <p className="text-lg lg:text-xl font-semibold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  "Connect with Comfort"
+                <p className="text-lg lg:text-xl font-semibold bg-gradient-to-r from-sky-600 via-blue-600 to-indigo-600 bg-clip-text text-transparent" dir="ltr">
+                  "{t('common.tagline')}"
                 </p>
               </div>
             </div>
-            <p className="text-gray-600 mt-2 font-medium">VervConnect Hotel Management Platform</p>
+            <p className="text-gray-600 mt-2 font-medium">{t('common.hotelManagementPlatform')}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4 lg:space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Email Address
+              <label className="block text-sm font-medium text-gray-700 mb-2" dir="auto">
+                {t('auth.email')}
               </label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -89,15 +91,15 @@ export function LoginForm() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white text-gray-900 placeholder-gray-400"
-                  placeholder="Enter your email"
+                  placeholder={t('auth.enterEmail')}
                   required
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Password
+              <label className="block text-sm font-medium text-gray-700 mb-2" dir="auto">
+                {t('auth.password')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
@@ -106,7 +108,7 @@ export function LoginForm() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all bg-white text-gray-900 placeholder-gray-400"
-                  placeholder="Enter your password"
+                  placeholder={t('auth.enterPassword')}
                 />
               </div>
             </div>
@@ -116,7 +118,7 @@ export function LoginForm() {
               disabled={isLoading}
               className="w-full py-3 px-4 rounded-xl font-medium text-white bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 transition-all disabled:opacity-50 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] touch-manipulation"
             >
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {isLoading ? t('auth.signingIn') : t('auth.signIn')}
             </button>
           </form>
 
@@ -125,8 +127,8 @@ export function LoginForm() {
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-200" />
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-3 bg-white text-gray-600 rounded-full font-medium">Demo Accounts</span>
+              <div className="relative flex justify-center text-sm" dir="auto">
+                <span className="px-3 bg-white text-gray-600 rounded-full font-medium">{t('auth.demoAccounts')}</span>
               </div>
             </div>
 
@@ -153,13 +155,13 @@ export function LoginForm() {
 
             <div className="mt-4 lg:mt-6 p-3 lg:p-4 rounded-xl border border-blue-200 bg-blue-50">
               <div className="flex items-center space-x-2 mb-2">
-                <Shield className="w-5 h-5 text-blue-600 flex-shrink-0" />
-                <span className="text-sm font-medium text-blue-800">
-                  Administrator Access
+                <Shield className="w-5 h-5 text-blue-600 flex-shrink-0" dir="ltr" />
+                <span className="text-sm font-medium text-blue-800" dir="auto">
+                  {t('auth.adminAccess')}
                 </span>
               </div>
-              <p className="text-xs text-blue-700">
-                Use the Administrator account to access the full hotel configuration panel, including room setup, banquet hall management, branding customization, and system settings.
+              <p className="text-xs text-blue-700" dir="auto">
+                {t('auth.adminAccessDescription')}
               </p>
             </div>
           </div>

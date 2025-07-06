@@ -27,10 +27,9 @@ i18n
     interpolation: {
       escapeValue: false // React already safes from XSS
     },
-    // Set RTL for Arabic language
-    },
     react: {
       useSuspense: false
+    },
     detection: {
       order: ['localStorage', 'navigator'],
       lookupLocalStorage: 'vervConnectLanguage',

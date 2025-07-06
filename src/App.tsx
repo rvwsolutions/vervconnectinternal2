@@ -118,21 +118,21 @@ function AppContent() {
 function App() {
   return (
     <BrandingProvider>
-      <AuthProvider>
-        <SecurityProvider>
-          <CommunicationProvider>
-            <FinancialProvider>
-              <OperationsProvider>
-                <CurrencyProvider>
-                  <HotelProvider>
-                    <AppContent />
-                  </HotelProvider>
-                </CurrencyProvider>
-              </OperationsProvider>
-            </FinancialProvider>
-          </CommunicationProvider>
-        </SecurityProvider>
-      </AuthProvider>
+    <AuthProvider>
+      <SecurityProvider>
+        <CommunicationProvider>
+          <FinancialProvider>
+            <OperationsProvider>
+              <CurrencyProvider>
+                <HotelProvider>
+                  <AppContent />
+                </HotelProvider>
+              </CurrencyProvider>
+            </OperationsProvider>
+          </FinancialProvider>
+        </CommunicationProvider>
+      </SecurityProvider>
+    </AuthProvider>
     </BrandingProvider>
   );
 }

@@ -131,8 +131,8 @@ export function AdminModule() {
 
   return (
     <div className="flex h-full">
-      {/* Admin Sidebar */}
-      <div className="hidden md:block w-64 bg-white border-r border-gray-200 h-full overflow-y-auto">
+      {/* Admin Sidebar - Only visible on desktop */}
+      <div className="hidden md:block w-64 bg-white border-r border-gray-200 h-full overflow-y-auto flex-shrink-0">
         <div className="p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-6">{t('common.admin')}</h2>
           <nav className="space-y-1">
@@ -236,7 +236,7 @@ export function AdminModule() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto w-full">
         {/* Mobile Admin Navigation */}
         <div className="md:hidden p-4 bg-white border-b border-gray-200">
           <div className="flex items-center justify-between mb-4">

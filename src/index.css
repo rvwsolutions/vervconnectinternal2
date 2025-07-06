@@ -203,7 +203,7 @@ html[dir="rtl"] .rtl-input-padding-right {
   .rtl-text-left {
     text-align: left;
   }
-}
+}}
 
 /* Animation keyframes */
 @keyframes float {

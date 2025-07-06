@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCommunication } from '../context/CommunicationContext';
 import { useBranding } from '../context/BrandingContext';
 import { VervConnectLogo } from './VervConnectLogo';
-import { Hotel, Calendar, Bed, Users, UtensilsCrossed, BarChart3, LogOut, Menu, X, Settings, Shield, ZoomIn as Room, MessageSquare, DollarSign, Bell, Building, Home, Languages } from 'lucide-react';
+import { Calendar, Bed, Users, UtensilsCrossed, BarChart3, LogOut, Menu, X, Settings, Shield, ZoomIn as Room, MessageSquare, DollarSign, Bell, Building, Home, Languages } from 'lucide-react';
 import { LanguageSettings } from './LanguageSettings';
 
 interface LayoutProps {
@@ -321,9 +321,9 @@ export function Layout({ children, currentModule, onModuleChange }: LayoutProps)
   return (
     <div className="flex h-screen overflow-hidden">
       <Sidebar />
-      {sidebarOpen && <Sidebar mobile />}
+      {sidebarOpen && <Sidebar mobile={true} />}
 
-      <div className="flex-1 flex flex-col overflow-hidden" dir={i18n.dir()}>
+      <div className="flex-1 flex flex-col overflow-hidden">
         <header className="bg-white/95 backdrop-blur-sm shadow-sm border-b border-blue-100 lg:hidden">
           <div className="flex items-center justify-between h-14 px-4">
             <div className="flex items-center space-x-2">

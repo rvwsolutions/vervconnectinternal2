@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useHotel } from '../context/HotelContext';
 import { useCurrency } from '../context/CurrencyContext';
 import { useAuth } from '../context/AuthContext';
@@ -65,6 +66,7 @@ interface RoomsModuleProps {
 
 export function RoomsModule({ filters }: RoomsModuleProps) {
   const { t } = useTranslation();
+  const { t } = useTranslation();
   const { 
     rooms, 
     bookings, 
@@ -83,7 +85,6 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
   const [showRoomManagement, setShowRoomManagement] = useState(false);
   const [showBookingForm, setShowBookingForm] = useState(false);
   const [showCheckInForm, setShowCheckInForm] = useState(false);
-  const [showGroupBookings, setShowGroupBookings] = useState(false);
   const [showGuestForm, setShowGuestForm] = useState(false);
   const [showGroupBookingManagement, setShowGroupBookingManagement] = useState(false);
   const [showBillGenerator, setShowBillGenerator] = useState(false);
@@ -2408,13 +2409,6 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
-              <Bed className="w-5 h-5" />
-              <span>Rooms</span>
-            </button>
-            <button
-              onClick={() => setView('bookings')}
-              className={`flex items-center space-x-2 py-4 px-1 border-b-2 font-medium text-sm ${
-                view === 'bookings'
                   ? 'border-indigo-500 text-indigo-600'
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
@@ -2911,7 +2905,6 @@ export function RoomsModule({ filters }: RoomsModuleProps) {
             room={rooms.find(r => r.id === selectedBooking.roomId)!}
             onClose={() => setShowBillGenerator(false)}
             onCheckoutComplete={handleCheckoutComplete}
-          />
         </div>
       )}
     </div>
